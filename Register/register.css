@@ -1,0 +1,180 @@
+/* ===== CARD SHAPE OPTIONS ===== */
+/* Add these styles to your existing CSS */
+
+/* Option 1: Modern Rounded (Similar to toggle menu) */
+.card-rounded {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Option 2: Soft Rounded Corners */
+.card-soft {
+    border-radius: 15px 15px 8px 8px;
+}
+
+/* Option 3: Angled Gaming Style */
+.card-angled {
+    border-radius: 10px 25px 10px 25px;
+}
+
+/* Option 4: Bubble Style */
+.card-bubble {
+    border-radius: 30px 10px 30px 10px;
+}
+
+/* Option 5: Modern Square with subtle radius */
+.card-modern {
+    border-radius: 8px;
+}
+
+/* Option 6: Asymmetric Gaming */
+.card-gaming {
+    border-radius: 15px 5px 15px 5px;
+}
+
+/* Option 7: Pill Shape */
+.card-pill {
+    border-radius: 50px;
+}
+
+/* Option 8: Hexagon Inspired */
+.card-hex {
+    border-radius: 10px 30px 10px 30px;
+}
+
+/* ===== TOURNAMENT CARD SHAPES ===== */
+
+/* Apply to tournament cards - Choose one */
+.tournament-card {
+    /* Default shape - keep your existing styles */
+    border-radius: 10px;
+    
+    /* Uncomment one of the below for different shapes */
+    
+    /* Modern Rounded */
+    /* border-radius: 12px; */
+    
+    /* Gaming Angled */
+    /* border-radius: 10px 25px 10px 25px; */
+    
+    /* Bubble Style */
+    /* border-radius: 20px 5px 20px 5px; */
+    
+    /* Soft Rounded */
+    /* border-radius: 15px; */
+}
+
+/* Card header shapes to match */
+.card-header {
+    /* Match the top corners with card */
+    border-radius: 10px 10px 0 0;
+    
+    /* For angled cards */
+    /* border-radius: 10px 25px 0 0; */
+    
+    /* For bubble cards */
+    /* border-radius: 20px 5px 0 0; */
+}
+
+/* ===== FEATURE CARD SHAPES ===== */
+.feature-card {
+    /* Default */
+    border-radius: 10px;
+    
+    /* Circle-like */
+    /* border-radius: 20px; */
+    
+    /* Hexagon style */
+    /* border-radius: 15px 5px 15px 5px; */
+}
+
+/* ===== STEP CARD SHAPES ===== */
+.step {
+    /* Default */
+    border-radius: 10px;
+    
+    /* Circular emphasis */
+    /* border-radius: 20px; */
+    
+    /* Modern square */
+    /* border-radius: 5px; */
+}
+
+/* Step number circle - keep this circular */
+.step-number {
+    border-radius: 50%; /* This should stay circular */
+}
+
+/* ===== SPECIFIC SHAPE COMBINATIONS ===== */
+
+/* Combination 1: Modern Gaming Look */
+.card-gaming-modern {
+    border-radius: 12px 25px 12px 25px;
+    overflow: hidden;
+}
+
+.card-gaming-modern .card-header {
+    border-radius: 12px 25px 0 0;
+}
+
+/* Combination 2: Soft Rounded */
+.card-soft-rounded {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card-soft-rounded .card-header {
+    border-radius: 15px 15px 0 0;
+}
+
+/* Combination 3: Angled Professional */
+.card-angled-pro {
+    border-radius: 8px 20px 8px 20px;
+    overflow: hidden;
+}
+
+.card-angled-pro .card-header {
+    border-radius: 8px 20px 0 0;
+}
+
+/* ===== HOVER EFFECTS FOR SHAPES ===== */
+.tournament-card:hover {
+    transform: translateY(-5px);
+    /* Keep the same border-radius on hover */
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    /* Maintain shape on hover */
+}
+
+.step:hover {
+    transform: translateY(-5px);
+    /* Maintain shape on hover */
+}
+
+/* ===== SHADOW ENHANCEMENTS FOR SHAPES ===== */
+.tournament-card {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    /* Enhanced shadow for better shape definition */
+}
+
+.tournament-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== RESPONSIVE SHAPE ADJUSTMENTS ===== */
+@media (max-width: 768px) {
+    .tournament-card {
+        /* Slightly less pronounced shapes on mobile */
+        border-radius: 8px;
+    }
+    
+    .feature-card {
+        border-radius: 8px;
+    }
+    
+    .step {
+        border-radius: 8px;
+    }
+}

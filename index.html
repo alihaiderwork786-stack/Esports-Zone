@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esports Zone - Battle Royale Tournaments</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body> 
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="Images/ez-logo.PNG" alt="EsportsZone Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" style="color: var(--accent)";>Home</a></li>
+                <li><a href="/Tournaments/tournament.html">Tournaments</a></li> 
+                <li><a href="/How-It-Work/how-it-work.html">How It Works</a></li>
+                <li><a href="/Leaderboard/leaderboard.html">Leaderboards</a></li>
+                <li><a href="/About/about.html">About</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="Login/login.html" class="btn btn-outline">Login</a>
+                <a href="/Register/register.html" class="btn btn-primary">Register</a>
+            </div>
+        </nav>
+    </header>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Participate in Epic Battle Royale Tournaments</h2>
+            <p>Join the ultimate Free Fire competitive platform. Participate in tournaments, showcase your skills, and win amazing prizes.
+               Coming soon add more <span>"Battle Royale Game"!</span></p>
+            <a href="Login/login.html" class="btn btn-primary">Join Now</a>
+        </div>
+    </section>
+
+    <!-- Upcoming Tournaments -->
+    <section class="tournaments">
+        <div class="section-title">
+            <h2>Upcoming Tournaments</h2>
+            <p>Compete in these exciting battles , claim your victory & win coins</p>
+        </div>
+        
+        <div class="tournament-filters">
+            <button class="filter-btn active">All</button>
+
+            <button class="filter-btn">Solo</button>
+            <button class="filter-btn">Squad</button>
+            <button class="filter-btn">Premium</button>
+            <select id="gameSelect" onchange="location = this.value;" class="filter-btn">
+                 <option value="freefire.html">Free Fire</option>
+                 <option value="pubg.html">PUBG Mobile</option>
+                 <option value="cod.html">Call of Duty</option>
+            </select>
+        </div>            
+        
+        <div class="tournament-grid">
+            <!-- Tournament Card 1 -->
+            <div class="tournament-card">
+                <div class="card-header">
+                    <h3>Free Fire Solo Championship</h3>
+                    <p>September 28, 2025 • 3:00 PM GMT</p>
+                    
+                    <!-- Small Timer -->
+                    <div class="small-timer">
+                        <div class="timer-part">
+                            <div class="timer-value" id="ff-days">00</div>
+                            <div class="timer-label">Days</div>
+                        </div>
+                        <div class="timer-part">
+                            <div class="timer-value" id="ff-hours">00</div>
+                            <div class="timer-label">Hrs</div>
+                        </div>
+                        <div class="timer-part">
+                            <div class="timer-value" id="ff-minutes">00</div>
+                            <div class="timer-label">Min</div>
+                        </div>
+                        <div class="timer-part">
+                            <div class="timer-value" id="ff-seconds">00</div>
+                            <div class="timer-label">Sec</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="tournament-info">
+                        <div class="info-item">
+                            <span>Mode:</span>
+                            <span>Solo</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Players:</span>
+                            <span>50</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Entry Fee:</span>
+                            <span>100 Coins</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Status:</span>
+                            <span>Open</span>
+                        </div>
+                    </div>
+                    <div class="prize-pool">
+                        <h4>Prize Pool</h4>
+                        <div class="prize-amount">1,000 Coins</div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-primary" style="width: 100%; text-align: center;">Register Now</a>
+                </div>
+            </div>
+            
+            <!-- Tournament Card 2 -->
+            <div class="tournament-card">
+                <div class="card-header">
+                    <h3>Squad Showdown</h3>
+                    <p>October 5, 2025 • 5:00 PM GMT</p>
+                    
+                    <!-- Small Timer -->
+                    <div class="small-timer">
+                        <div class="timer-part">
+                            <div class="timer-value" id="squad-days">00</div>
+                            <div class="timer-label">Days</div>
+                        </div>
+                        <div class="timer-part">
+                            <div class="timer-value" id="squad-hours">00</div>
+                            <div class="timer-label">Hrs</div>
+                        </div>
+                        <div class="timer-part">
+                            <div class="timer-value" id="squad-minutes">00</div>
+                            <div class="timer-label">Min</div>
+                        </div>
+                        <div class="timer-part">
+                            <div class="timer-value" id="squad-seconds">00</div>
+                            <div class="timer-label">Sec</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="tournament-info">
+                        <div class="info-item">
+                            <span>Mode:</span>
+                            <span>Squad</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Teams:</span>
+                            <span>25</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Entry Fee:</span>
+                            <span>250 Coins</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Status:</span>
+                            <span>Open</span>
+                        </div>
+                    </div>
+                    <div class="prize-pool">
+                        <h4>Prize Pool</h4>
+                        <div class="prize-amount">2,500 Coins</div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-primary" style="width: 100%; text-align: center;">Register Now</a>
+                </div>
+            </div>
+            
+            <!-- Tournament Card 3 -->
+            <div class="tournament-card">
+                <div class="card-header">
+                    <h3>Pro League Qualifiers</h3>
+                    <p>October 15, 2025 • 4:00 PM GMT</p>
+                    
+                    <!-- Small Timer -->
+                    <div class="small-timer">
+                        <div class="timer-part">
+                            <div class="timer-value" id="pro-days">00</div>
+                            <div class="timer-label">Days</div>
+                        </div>
+                        <div class="timer-part">
+                            <div class="timer-value" id="pro-hours">00</div>
+                            <div class="timer-label">Hrs</div>
+                        </div>
+                        <div class="timer-part">
+                            <div class="timer-value" id="pro-minutes">00</div>
+                            <div class="timer-label">Min</div>
+                        </div>
+                        <div class="timer-part">
+                            <div class="timer-value" id="pro-seconds">00</div>
+                            <div class="timer-label">Sec</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="tournament-info">
+                        <div class="info-item">
+                            <span>Mode:</span>
+                            <span>Duo</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Teams:</span>
+                            <span>500</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Entry Fee:</span>
+                            <span>Free</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Status:</span>
+                            <span>Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="prize-pool">
+                        <h4>Prize Pool</h4>
+                        <div class="prize-amount">50,000 Coins</div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-primary" style="width: 100%; text-align: center;">Notify Me</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="section-title">
+            <h2>Why Choose Esports Zone</h2>
+            <p>We provide the best tournament experience for battle royale gamers</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎮</div>
+                <h3>Competitive Tournaments</h3>
+                <p>Regular tournaments with various formats and prize pools for all skill levels.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Fast Matchmaking</h3>
+                <p>Our advanced system finds you matches quickly based on your skill level.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Secure Platform</h3>
+                <p>Anti-cheat protection and fair play policies to ensure competitive integrity.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3>Big Prize Pools</h3>
+                <p>Compete for impressive cash prizes and exclusive in-game items.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="section-title">
+            <h2>How It Works</h2>
+            <p>Get started in three simple steps</p>
+        </div>
+        
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Create Account</h3>
+                <p>Sign up and complete your gaming profile with your stats and preferences.</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Join Tournament</h3>
+                <p>Browse upcoming tournaments and register for ones that match your skills.</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Compete & Win</h3>
+                <p>Play your matches, climb the leaderboards, and claim your rewards.</p>
+            </div>
+        </div>
+    </section>
+
+
+<!-- ---------------
+-----------------
+FOOTER 
+----------------- -->
+
+<footer>
+    <div class="footer-content">
+        <!-- Logo Section -->
+        <div class="footer-logo">
+            <div class="logo">
+                <img src="/Images/ez-logo.PNG" alt="EsportsZone Logo" class="logo-img">
+            </div>
+
+            <p>Esports Zone Official Social Media Account – Subscribe Now & Stay Updated With The Latest Tournaments And New Updates News</p>
+
+            <div class="social-links">
+                <a href="#" class="social-link facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-link youtube"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-link twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link discord"><i class="fab fa-discord"></i></a>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-links">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="/Tournaments/tournament.html">Tournaments</a></li>
+                <li><a href="/Leaderboard/leaderboard.html">Leaderboards</a></li>
+                <li><a href="How IT Work/howitwork.html">How to Play</a></li>
+                <li><a href="FAQ/faq.html">FAQ</a></li>
+            </ul>
+        </div>
+
+        <!-- Legal Links -->
+        <div class="footer-links">
+            <h3>Legal</h3>
+            <ul>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="Cookie Policy/cookieploicy.html">Cookie Policy</a></li>
+                <li><a href="#">Refund Policy</a></li>
+            </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-links">
+            <h3>Contact Us</h3>
+            <ul>
+                <li>support@esportszone.com</li>
+                <li>+92 335-8423786</li>
+                <li>Thokar Niaz Baig, Lahore, Pakistan</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="copyright">
+        <p>&copy; 2025 Esports Zone. All rights reserved.</p>
+    </div>
+
+
+<script src="script.js"></script>
+
+</footer>
+
+</body>
+</html>
