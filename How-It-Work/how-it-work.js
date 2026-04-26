@@ -1,4 +1,6 @@
-// Enhanced Mobile Navigation System
+// COMPLETE CORRECTED JAVASCRIPT FILE
+// Mobile Navigation & All Issues Fixed
+
 document.addEventListener('DOMContentLoaded', function() {
     initializePage();
 });
@@ -7,141 +9,184 @@ function initializePage() {
     setupMobileNavigation();
     setupPaymentMethods();
     setupFileUpload();
-    setupDesktopNavigationHighlights();
+    setupSafeNavigation(); // 404 error handling
+    fixAllNavigationLinks(); // Extra safety
 }
 
-// ==================== IMPROVED MOBILE NAVIGATION ====================
+// ==================== MAIN FIX: MOBILE NAVIGATION ====================
 function setupMobileNavigation() {
-    // Get all required elements
+    // Get elements
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
     const mobileCloseBtn = document.querySelector('.mobile-close-btn');
     
-    // CRITICAL FIX: Get all navigation links - both desktop AND mobile versions
-    // This ensures the mobile menu closes when ANY link is clicked
-    const allNavLinks = document.querySelectorAll('nav a, .mobile-nav-links a, .mobile-menu-overlay a, .nav-links a');
+    console.log('Mobile navigation initialized');
     
-    console.log('🔍 Mobile Navigation Setup - Found links:', allNavLinks.length);
-    
-    // Debug: Log all found links to help identify issues
-    allNavLinks.forEach((link, index) => {
-        console.log(`Link ${index}:`, link.textContent, '| href:', link.getAttribute('href'));
-    });
-    
-    // Open mobile menu
+    // OPEN MENU FUNCTION
     if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', function(e) {
+        // Remove old event listeners to avoid duplicates
+        const newBtn = mobileMenuBtn.cloneNode(true);
+        mobileMenuBtn.parentNode.replaceChild(newBtn, mobileMenuBtn);
+        
+        newBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            console.log('📱 Mobile menu opened');
             
-            if (mobileMenuOverlay) {
-                mobileMenuOverlay.classList.add('active');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            if (overlay) {
+                overlay.classList.add('active');
                 document.body.style.overflow = 'hidden';
                 document.body.style.position = 'fixed';
-                document.body.style.width = '100%';
+                console.log('Mobile menu opened');
             }
         });
-    } else {
-        console.warn('⚠️ .mobile-menu-btn not found in DOM');
     }
     
-    // Close mobile menu with close button
+    // CLOSE WITH CLOSE BUTTON
     if (mobileCloseBtn) {
-        mobileCloseBtn.addEventListener('click', function(e) {
+        const newCloseBtn = mobileCloseBtn.cloneNode(true);
+        mobileCloseBtn.parentNode.replaceChild(newCloseBtn, mobileCloseBtn);
+        
+        newCloseBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('❌ Mobile menu closed via close button');
-            closeMobileMenu(mobileMenuOverlay);
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            if (overlay) {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+                document.body.style.position = '';
+                console.log('Mobile menu closed');
+            }
         });
     }
     
-    // CRITICAL FIX: Close menu when ANY navigation link is clicked
+    // CLOSE WHEN ANY LINK IS CLICKED (THIS FIXES YOUR PROBLEM)
     if (mobileMenuOverlay) {
-        // Get all links inside the mobile menu
-        const mobileLinks = mobileMenuOverlay.querySelectorAll('a');
+        // Get ALL links inside mobile menu
+        const allMobileLinks = mobileMenuOverlay.querySelectorAll('a');
         
-        mobileLinks.forEach(link => {
-            // Remove any existing listeners to avoid duplicates
-            link.removeEventListener('click', handleMobileLinkClick);
-            // Add fresh click handler
-            link.addEventListener('click', handleMobileLinkClick);
+        allMobileLinks.forEach(link => {
+            // Remove old listeners
+            const newLink = link.cloneNode(true);
+            link.parentNode.replaceChild(newLink, link);
+            
+            // Add click handler to close menu
+            newLink.addEventListener('click', function(e) {
+                console.log('Link clicked:', this.textContent);
+                
+                // Close the menu
+                const overlay = document.querySelector('.mobile-menu-overlay');
+                if (overlay) {
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                    document.body.style.position = '';
+                }
+                
+                // Let the navigation happen
+                return true;
+            });
         });
-        
-        // Also close when clicking on the overlay background
+    }
+    
+    // CLICK ON OVERLAY BACKGROUND TO CLOSE
+    if (mobileMenuOverlay) {
         mobileMenuOverlay.addEventListener('click', function(e) {
             if (e.target === mobileMenuOverlay) {
-                console.log('❌ Mobile menu closed via overlay click');
-                closeMobileMenu(mobileMenuOverlay);
+                mobileMenuOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+                document.body.style.position = '';
             }
         });
     }
     
-    // Additional safety: Close menu on window resize (if switching from mobile to desktop)
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768 && mobileMenuOverlay && mobileMenuOverlay.classList.contains('active')) {
-            closeMobileMenu(mobileMenuOverlay);
-        }
-    });
-    
-    // Handle escape key to close menu
+    // ESCAPE KEY TO CLOSE
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && mobileMenuOverlay && mobileMenuOverlay.classList.contains('active')) {
-            closeMobileMenu(mobileMenuOverlay);
+        if (e.key === 'Escape') {
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            if (overlay && overlay.classList.contains('active')) {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+                document.body.style.position = '';
+            }
         }
     });
 }
 
-// Helper function to close mobile menu
-function closeMobileMenu(mobileMenuOverlay) {
-    if (mobileMenuOverlay) {
-        mobileMenuOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.width = '';
-    }
-}
-
-// Helper function for mobile link clicks
-function handleMobileLinkClick(e) {
-    const href = this.getAttribute('href');
-    console.log('🔗 Mobile link clicked:', this.textContent, '| href:', href);
-    
-    // Close the menu
-    const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
-    closeMobileMenu(mobileMenuOverlay);
-    
-    // Let the navigation happen naturally
-    // No need to prevent default - let the browser handle the navigation
-}
-
-// ==================== DESKTOP NAVIGATION HIGHLIGHT ====================
-function setupDesktopNavigationHighlights() {
-    // Get current page filename
+// ==================== FIX 404 ERRORS ====================
+function setupSafeNavigation() {
+    // List of existing pages (update this as per your actual files)
+    const existingPages = ['index.html', 'leaderboard.html', 'about.html'];
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     
-    // Highlight active navigation link
-    const allNavLinks = document.querySelectorAll('.nav-links a, nav a');
+    // Get all navigation links
+    const allLinks = document.querySelectorAll('nav a, .mobile-menu-overlay a, .nav-links a');
     
-    allNavLinks.forEach(link => {
-        const linkHref = link.getAttribute('href');
-        if (linkHref === currentPage || 
-            (currentPage === 'index.html' && linkHref === 'index.html') ||
-            (currentPage === '' && linkHref === 'index.html')) {
-            link.classList.add('active');
+    allLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        
+        // Skip external links and anchor links
+        if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('javascript')) {
+            return;
         }
         
-        // Also add hover effects for better UX
-        link.addEventListener('mouseenter', function() {
-            this.style.transition = 'all 0.3s ease';
+        // Check if it's an HTML file
+        if (href.includes('.html')) {
+            const filename = href.split('/').pop();
+            
+            // If page doesn't exist, show coming soon message
+            if (!existingPages.includes(filename) && filename !== currentPage) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert(`"${filename.replace('.html', '')}" page is coming soon!`);
+                    console.log('Prevented 404 for:', filename);
+                });
+            }
+        }
+    });
+}
+
+// ==================== FIX ALL BROKEN LINKS ====================
+function fixAllNavigationLinks() {
+    // Fix Home link
+    const homeLinks = document.querySelectorAll('a[href*="home"], a[href*="index"]');
+    homeLinks.forEach(link => {
+        if (link.getAttribute('href') === 'home.html' || link.getAttribute('href') === './home.html') {
+            link.setAttribute('href', 'index.html');
+            console.log('Fixed home link');
+        }
+    });
+    
+    // Fix Leaderboard link
+    const leaderboardLinks = document.querySelectorAll('a[href*="leaderboard"]');
+    leaderboardLinks.forEach(link => {
+        if (link.getAttribute('href') !== 'leaderboard.html') {
+            link.setAttribute('href', 'leaderboard.html');
+            console.log('Fixed leaderboard link');
+        }
+    });
+    
+    // Fix About link
+    const aboutLinks = document.querySelectorAll('a[href*="about"]');
+    aboutLinks.forEach(link => {
+        if (link.getAttribute('href') !== 'about.html') {
+            link.setAttribute('href', 'about.html');
+            console.log('Fixed about link');
+        }
+    });
+    
+    // Fix Tournament link (if exists)
+    const tournamentLinks = document.querySelectorAll('a[href*="tournament"]');
+    tournamentLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Tournament page coming soon! Stay tuned.');
         });
     });
 }
 
-// ==================== EXISTING FUNCTIONS (PRESERVED) ====================
-
-// Payment Method Selection
+// ==================== PAYMENT METHODS ====================
 function setupPaymentMethods() {
     const methodOptions = document.querySelectorAll('.method-option');
+    
     if (methodOptions.length > 0) {
         methodOptions.forEach(option => {
             option.addEventListener('click', function() {
@@ -167,7 +212,7 @@ function setupPaymentMethods() {
     }
 }
 
-// File Upload Setup
+// ==================== FILE UPLOAD ====================
 function setupFileUpload() {
     const uploadArea = document.getElementById('uploadArea');
     const paymentScreenshot = document.getElementById('paymentScreenshot');
@@ -200,18 +245,16 @@ function setupFileUpload() {
     }
 }
 
-// ==================== BACKEND INTEGRATION ====================
-
+// ==================== BACKEND CONFIGURATION ====================
 const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwUA9Rb-gbyIcpxwIy2OdbZoy33RvhmJb-lwTADOZB91lw2Or3Y6IieH8uHUXkHoRaj/exec';
 
-// Simple email save function
+// Save Partner Email
 async function savePartnerEmail() {
     const emailInput = document.getElementById('partnerEmail');
     if (!emailInput) return;
     
     const email = emailInput.value.trim();
     
-    // Basic validation
     if (!email) {
         alert('Please enter your email address.');
         return;
@@ -222,7 +265,6 @@ async function savePartnerEmail() {
         return;
     }
     
-    // Show loading
     const notifyBtn = document.querySelector('.notify-btn');
     if (!notifyBtn) return;
     
@@ -231,12 +273,9 @@ async function savePartnerEmail() {
     notifyBtn.disabled = true;
     
     try {
-        // Try to save to backend
         const response = await fetch(BACKEND_URL, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 email: email,
                 source: 'partner_program',
@@ -245,24 +284,21 @@ async function savePartnerEmail() {
         });
         
         const result = await response.json();
-        console.log('Backend response:', result);
         
         if (result.success) {
-            alert('✅ Thank you! Your email has been saved successfully. We will notify you when the partner program launches.');
+            alert('✅ Thank you! Your email has been saved successfully.');
             emailInput.value = '';
         } else {
             throw new Error(result.message || 'Backend error');
         }
-        
     } catch (error) {
         console.error('Backend failed, saving locally:', error);
         
-        // Save to localStorage as fallback
         let emails = JSON.parse(localStorage.getItem('partnerEmails')) || [];
         if (!emails.includes(email)) {
             emails.push(email);
             localStorage.setItem('partnerEmails', JSON.stringify(emails));
-            alert('✅ Thank you! Your email has been saved. We will notify you when the partner program launches.');
+            alert('✅ Thank you! Your email has been saved.');
             emailInput.value = '';
         } else {
             alert('This email is already registered.');
@@ -274,7 +310,6 @@ async function savePartnerEmail() {
 }
 
 // ==================== PAYMENT FUNCTIONS ====================
-
 function copyToClipboard(elementId) {
     const element = document.getElementById(elementId);
     if (!element) return;
@@ -292,17 +327,13 @@ function copyToClipboard(elementId) {
                 copyBtn.innerHTML = originalText;
                 copyBtn.style.background = '';
             }, 2000);
-        } else {
-            alert('Copied: ' + text);
         }
     });
 }
 
 function triggerUpload() {
     const fileInput = document.getElementById('paymentScreenshot');
-    if (fileInput) {
-        fileInput.click();
-    }
+    if (fileInput) fileInput.click();
 }
 
 function removeScreenshot() {
@@ -322,12 +353,12 @@ function submitPayment() {
     const paymentScreenshot = document.getElementById('paymentScreenshot');
     
     if (!transactionId || !paymentAmount || !userUsername || !paymentScreenshot) {
-        alert('Please fill all required fields and upload payment screenshot.');
+        alert('Please fill all required fields.');
         return;
     }
     
     if (!transactionId.value || !paymentAmount.value || !userUsername.value || !paymentScreenshot.files[0]) {
-        alert('Please fill all required fields and upload payment screenshot.');
+        alert('Please fill all required fields and upload screenshot.');
         return;
     }
     
@@ -335,12 +366,11 @@ function submitPayment() {
     if (!submitBtn) return;
     
     const originalText = submitBtn.innerHTML;
-    
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
     submitBtn.disabled = true;
     
     setTimeout(function() {
-        submitBtn.innerHTML = '<i class="fas fa-check"></i> Submitted Successfully!';
+        submitBtn.innerHTML = '<i class="fas fa-check"></i> Submitted!';
         submitBtn.style.background = '#4CAF50';
         
         setTimeout(function() {
@@ -353,69 +383,37 @@ function submitPayment() {
             if (userUsername) userUsername.value = '';
             removeScreenshot();
             
-            alert('Payment details submitted successfully! Our team will verify within 2-8 hours.');
+            alert('Payment submitted successfully! Will verify within 2-8 hours.');
         }, 2000);
     }, 2000);
 }
 
-// ==================== ADMIN CHECK FUNCTIONS ====================
-
-// Check backend emails
+// ==================== HELPER FUNCTIONS ====================
 async function checkBackendEmails() {
     try {
-        console.log('🔍 Checking backend emails...');
+        console.log('Checking backend emails...');
         const response = await fetch(BACKEND_URL + '?action=getEmails');
         const data = await response.json();
-        console.log('📧 Backend emails:', data);
+        console.log('Backend emails:', data);
         return data;
     } catch (error) {
-        console.error('Error checking backend:', error);
+        console.error('Error:', error);
     }
 }
 
-// Check local emails
 function checkLocalEmails() {
     const emails = JSON.parse(localStorage.getItem('partnerEmails')) || [];
-    console.log('📧 Local emails:', emails);
+    console.log('Local emails:', emails);
     return emails;
 }
 
-// Test backend connection
 async function testConnection() {
-    console.log('🧪 Testing connection...');
+    console.log('Testing connection...');
     await checkBackendEmails();
     checkLocalEmails();
 }
 
-// Auto test on page load
+// Auto test after 1 second
 setTimeout(() => {
-    console.log('🔄 Auto-testing connection...');
     testConnection();
 }, 1000);
-
-// ==================== ADDITIONAL MOBILE FIXES ====================
-// Fix for touch events on mobile devices
-document.addEventListener('touchstart', function() {}, { passive: true });
-
-// Ensure that navigation works properly on mobile devices
-window.addEventListener('load', function() {
-    // Additional check for mobile menu button visibility
-    const checkMobileMenu = setInterval(function() {
-        const mobileBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-        
-        if (mobileBtn && navLinks) {
-            const isMobile = window.getComputedStyle(mobileBtn).display !== 'none';
-            if (isMobile) {
-                console.log('📱 Mobile view detected - mobile menu active');
-                // Hide desktop nav links on mobile if needed
-                if (navLinks.style.display !== 'none') {
-                    // CSS should handle this, but just in case
-                }
-            } else {
-                console.log('💻 Desktop view detected');
-            }
-            clearInterval(checkMobileMenu);
-        }
-    }, 100);
-});
