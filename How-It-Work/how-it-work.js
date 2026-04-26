@@ -1,15 +1,16 @@
-// ==================== MAIN INITIALIZATION ====================
+// ==================== COMPLETE FIXED JS - NO 404 ERRORS ====================
+// Sirf existing pages ke links show honge
+
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('App Loaded - Mobile Ready');
+    console.log('App Loaded - No 404 Errors');
     
-    // Setup everything
     setupMobileMenu();
     setupPaymentMethods();
     setupFileUpload();
     setupPartnerEmail();
 });
 
-// ==================== MOBILE MENU (Auto-create if needed) ====================
+// ==================== MOBILE MENU (Sirf existing pages) ====================
 function setupMobileMenu() {
     // Create mobile menu button if not exists
     if (!document.querySelector('.mobile-menu-btn')) {
@@ -49,7 +50,7 @@ function setupMobileMenu() {
             transition: left 0.3s ease;
         `;
         
-        // Menu content
+        // SIRF EXISTING PAGES KE LINKS (Only Home page exists)
         overlay.innerHTML = `
             <div style="
                 display: flex;
@@ -72,6 +73,7 @@ function setupMobileMenu() {
                     cursor: pointer;
                 ">✕ CLOSE</button>
                 
+                <!-- ONLY WORKING LINK - Home page -->
                 <a href="index.html" style="
                     color: white;
                     font-size: 24px;
@@ -79,25 +81,30 @@ function setupMobileMenu() {
                     padding: 12px 24px;
                     border-radius: 10px;
                     transition: all 0.3s;
+                    background: #667eea;
                 ">🏠 HOME</a>
                 
-                <a href="leaderboard.html" style="
-                    color: white;
-                    font-size: 24px;
-                    text-decoration: none;
+                <!-- COMING SOON - No 404 error -->
+                <div style="
+                    color: #888;
+                    font-size: 20px;
                     padding: 12px 24px;
-                    border-radius: 10px;
-                    transition: all 0.3s;
-                ">📊 LEADERBOARD</a>
+                    text-align: center;
+                ">
+                    📊 LEADERBOARD<br>
+                    <span style="font-size: 14px;">(Coming Soon)</span>
+                </div>
                 
-                <a href="about.html" style="
-                    color: white;
-                    font-size: 24px;
-                    text-decoration: none;
+                <!-- COMING SOON - No 404 error -->
+                <div style="
+                    color: #888;
+                    font-size: 20px;
                     padding: 12px 24px;
-                    border-radius: 10px;
-                    transition: all 0.3s;
-                ">ℹ️ ABOUT</a>
+                    text-align: center;
+                ">
+                    ℹ️ ABOUT<br>
+                    <span style="font-size: 14px;">(Coming Soon)</span>
+                </div>
             </div>
         `;
         
@@ -125,7 +132,7 @@ function setupMobileMenu() {
         });
     }
     
-    // Close menu when clicking on any link
+    // Close menu when clicking on link (only Home link works)
     const links = overlay.querySelectorAll('a');
     links.forEach(link => {
         link.addEventListener('click', function() {
@@ -146,14 +153,12 @@ function setupMobileMenu() {
     function checkScreenSize() {
         if (window.innerWidth <= 768) {
             menuBtn.style.display = 'block';
-            // Hide desktop navigation if exists
             const desktopNav = document.querySelector('.nav-links, nav ul');
             if (desktopNav) desktopNav.style.display = 'none';
         } else {
             menuBtn.style.display = 'none';
             overlay.style.left = '-100%';
             document.body.style.overflow = '';
-            // Show desktop navigation
             const desktopNav = document.querySelector('.nav-links, nav ul');
             if (desktopNav) desktopNav.style.display = '';
         }
@@ -163,15 +168,34 @@ function setupMobileMenu() {
     window.addEventListener('resize', checkScreenSize);
 }
 
+// ==================== FIX DESKTOP NAVIGATION LINKS ====================
+// Desktop navigation links ko bhi fix karo
+function fixDesktopLinks() {
+    const desktopLinks = document.querySelectorAll('.nav-links a, nav a');
+    
+    desktopLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        
+        // Agar link leaderboard.html, about.html, ya tournament.html hai
+        if (href && (href.includes('leaderboard') || href.includes('about') || href.includes('tournament'))) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('⚠️ This page is coming soon! Stay tuned.');
+            });
+        }
+    });
+}
+
+// Call this after page loads
+setTimeout(fixDesktopLinks, 100);
+
 // ==================== PAYMENT METHODS ====================
 function setupPaymentMethods() {
     const methods = document.querySelectorAll('.method-option');
     
     methods.forEach(method => {
         method.addEventListener('click', function() {
-            // Remove active from all
             methods.forEach(m => m.classList.remove('active'));
-            // Add active to clicked
             this.classList.add('active');
             
             const type = this.getAttribute('data-method');
