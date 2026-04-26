@@ -1,28 +1,77 @@
-// ==================== HOW IT WORKS - COMPLETE JS ====================
-// Mobile navigation & all interactive features
+// ==================== HOW IT WORKS PAGE - COMPLETE JS ====================
+// Mobile optimized with payment guide and partner program features
 
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. Mobile Menu Toggle (Fixes link clicks on touch devices)
-    initMobileMenu();
+    console.log('How It Works - Loading Complete');
     
-    // 2. Payment Method Selection
+    // 1. Mobile Navigation (FIXED for touch)
+    initMobileNavigation();
+    
+    // 2. Mobile Touch Optimization
+    initTouchOptimization();
+    
+    // 3. Prevent Zoom Issues
+    initZoomPrevention();
+    
+    // 4. Smooth Animations
+    initSmoothAnimations();
+    
+    // 5. Payment Method Selection
     initPaymentMethods();
     
-    // 3. File Upload Preview
+    // 6. File Upload Preview
     initFileUpload();
     
-    // 4. Smooth scrolling for anchor links (optional)
-    initSmoothScroll();
+    // 7. Button Handlers (Register/Login)
+    initButtonHandlers();
     
-    // 5. Ensure all buttons have proper touch targets
+    // 8. Ensure all interactive elements have proper touch targets
     ensureTouchTargets();
 });
 
-// ==================== MOBILE MENU (FIXED FOR TOUCH) ====================
-function initMobileMenu() {
-    const mobileBtn = document.querySelector('.mobile-menu-btn');
-    const overlay = document.querySelector('.mobile-menu-overlay');
-    const closeBtn = document.querySelector('.mobile-close-btn');
+// ==================== MOBILE NAVIGATION (FIXED) ====================
+function initMobileNavigation() {
+    // Check if mobile menu elements already exist in HTML
+    let mobileBtn = document.querySelector('.mobile-menu-btn');
+    let overlay = document.querySelector('.mobile-menu-overlay');
+    let closeBtn = document.querySelector('.mobile-close-btn');
+    
+    // If not found, create them dynamically (fallback)
+    if (!mobileBtn) {
+        const nav = document.querySelector('nav');
+        if (!nav) return;
+        mobileBtn = document.createElement('button');
+        mobileBtn.className = 'mobile-menu-btn';
+        mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        mobileBtn.setAttribute('aria-label', 'Open menu');
+        nav.appendChild(mobileBtn);
+    }
+    
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'mobile-menu-overlay';
+        const mobileNavContent = document.createElement('div');
+        mobileNavContent.className = 'mobile-nav-content';
+        closeBtn = document.createElement('button');
+        closeBtn.className = 'mobile-close-btn';
+        closeBtn.innerHTML = '<i class="fas fa-times"></i>';
+        
+        // Clone desktop nav links
+        const desktopNavLinks = document.querySelector('.nav-links');
+        const mobileNavLinks = desktopNavLinks ? desktopNavLinks.cloneNode(true) : document.createElement('ul');
+        mobileNavLinks.className = 'mobile-nav-links';
+        
+        // Clone auth buttons
+        const desktopAuth = document.querySelector('.auth-buttons');
+        const mobileAuth = desktopAuth ? desktopAuth.cloneNode(true) : document.createElement('div');
+        mobileAuth.className = 'mobile-auth-buttons';
+        
+        mobileNavContent.appendChild(closeBtn);
+        mobileNavContent.appendChild(mobileNavLinks);
+        mobileNavContent.appendChild(mobileAuth);
+        overlay.appendChild(mobileNavContent);
+        document.body.appendChild(overlay);
+    }
     
     if (!mobileBtn || !overlay) return;
     
@@ -34,14 +83,15 @@ function initMobileMenu() {
     });
     
     // Close via close button
-    if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
+    const closeButton = overlay.querySelector('.mobile-close-btn');
+    if (closeButton) {
+        closeButton.addEventListener('click', function() {
             overlay.classList.remove('active');
             document.body.style.overflow = '';
         });
     }
     
-    // Close when clicking outside the content box
+    // Close when clicking outside content
     overlay.addEventListener('click', function(e) {
         if (e.target === overlay) {
             overlay.classList.remove('active');
@@ -49,20 +99,80 @@ function initMobileMenu() {
         }
     });
     
-    // CRITICAL: Make all mobile links work and close menu after navigation
-    const mobileLinks = overlay.querySelectorAll('a');
-    mobileLinks.forEach(link => {
+    // Ensure all mobile links work and close menu after click
+    overlay.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', function() {
             overlay.classList.remove('active');
             document.body.style.overflow = '';
-            // Let the browser navigate naturally – no e.preventDefault()
+            // Let navigation happen naturally
         });
     });
     
-    // Prevent body scroll when menu is open (touchmove)
+    // Prevent body scroll when menu open on touch
     overlay.addEventListener('touchmove', function(e) {
         e.preventDefault();
     }, { passive: false });
+}
+
+// ==================== TOUCH OPTIMIZATION ====================
+function initTouchOptimization() {
+    const touchElements = document.querySelectorAll('a, button, .btn, .method-option, .upload-area');
+    touchElements.forEach(element => {
+        element.addEventListener('touchstart', function() {
+            this.classList.add('touch-active');
+        }, { passive: true });
+        element.addEventListener('touchend', function() {
+            this.classList.remove('touch-active');
+        }, { passive: true });
+    });
+    
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (href !== '#' && href.startsWith('#')) {
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    });
+}
+
+// ==================== ZOOM PREVENTION ====================
+function initZoomPrevention() {
+    function setViewport() {
+        const viewport = document.querySelector('meta[name="viewport"]');
+        if (viewport) {
+            viewport.setAttribute('content', 
+                'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover');
+        }
+    }
+    setViewport();
+    document.documentElement.style.webkitTextSizeAdjust = '100%';
+    window.addEventListener('orientationchange', function() {
+        setTimeout(setViewport, 100);
+    });
+}
+
+// ==================== SMOOTH ANIMATIONS ====================
+function initSmoothAnimations() {
+    // Animate overview cards on load
+    const cards = document.querySelectorAll('.overview-card, .step-detailed');
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            card.style.transition = 'all 0.5s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
 }
 
 // ==================== PAYMENT METHOD SELECTION ====================
@@ -75,11 +185,9 @@ function initPaymentMethods() {
     
     methodOptions.forEach(option => {
         option.addEventListener('click', function() {
-            // Remove active class from all
             methodOptions.forEach(opt => opt.classList.remove('active'));
             this.classList.add('active');
             
-            // Update account details based on selected method
             const method = this.getAttribute('data-method');
             if (method === 'easypaisa') {
                 if (accountNumberSpan) accountNumberSpan.textContent = '0312-3456789';
@@ -104,9 +212,7 @@ function initFileUpload() {
     
     if (!uploadArea || !fileInput) return;
     
-    uploadArea.addEventListener('click', function() {
-        fileInput.click();
-    });
+    uploadArea.addEventListener('click', () => fileInput.click());
     
     fileInput.addEventListener('change', function(e) {
         if (e.target.files.length > 0) {
@@ -122,26 +228,32 @@ function initFileUpload() {
     });
 }
 
-// ==================== SMOOTH SCROLL (for in-page links) ====================
-function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href === '#') {
+// ==================== BUTTON HANDLERS (Register/Login) ====================
+function initButtonHandlers() {
+    // Register buttons
+    document.querySelectorAll('.btn-primary').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const isLoggedIn = false; // Replace with actual auth check
+            if (!isLoggedIn) {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else if (href !== '#' && href.startsWith('#')) {
-                const target = document.querySelector(href);
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
+                window.location.href = '../Register/Sign Up/signup.html';
+            }
+        });
+    });
+    
+    // Login buttons
+    document.querySelectorAll('.btn-outline').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const isLoggedIn = false;
+            if (!isLoggedIn) {
+                e.preventDefault();
+                window.location.href = '../Login/login.html';
             }
         });
     });
 }
 
-// ==================== ENSURE TOUCH TARGETS (minimum 44x44px) ====================
+// ==================== ENSURE TOUCH TARGETS (min 44x44px) ====================
 function ensureTouchTargets() {
     const interactive = document.querySelectorAll('a, button, .btn, .method-option, .upload-area');
     interactive.forEach(el => {
@@ -191,7 +303,7 @@ window.submitPayment = function() {
     const fileInput = document.getElementById('paymentScreenshot');
     
     if (!transactionId || !paymentAmount || !username) {
-        alert('❌ Please fill all fields (Transaction ID, Amount, Username).');
+        alert('❌ Please fill all fields: Transaction ID, Amount, and Username.');
         return;
     }
     if (!fileInput || !fileInput.files.length) {
@@ -199,7 +311,7 @@ window.submitPayment = function() {
         return;
     }
     
-    // Simulate submission (you can replace with actual AJAX)
+    // Simulate submission (replace with actual AJAX if needed)
     alert('✅ Payment details submitted successfully!\nOur team will verify within 2-8 hours.');
     
     // Clear form
@@ -218,3 +330,8 @@ window.savePartnerEmail = function() {
     alert(`✅ Thanks! We'll notify you at ${email} when the partner program launches.`);
     document.getElementById('partnerEmail').value = '';
 };
+
+// ==================== TOUCH DEVICE DETECTION ====================
+function isTouchDevice() {
+    return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+}
