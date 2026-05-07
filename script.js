@@ -34,49 +34,46 @@ document.addEventListener('DOMContentLoaded', function() {
     initButtonHandlers();
 });
 
+let tournamentTimerInterval = null;
+
 // ==================== MOBILE NAVIGATION ====================
 function initMobileNavigation() {
     const nav = document.querySelector('nav');
     const navLinks = document.querySelector('.nav-links');
     const authButtons = document.querySelector('.auth-buttons');
+    if (!nav || !navLinks || !authButtons) {
+        return;
+    }
     
-    // Create mobile menu button
     const mobileMenuBtn = document.createElement('button');
     mobileMenuBtn.className = 'mobile-menu-btn';
     mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
     mobileMenuBtn.setAttribute('aria-label', 'Open menu');
     nav.appendChild(mobileMenuBtn);
     
-    // Create mobile menu overlay
     const mobileMenu = document.createElement('div');
     mobileMenu.className = 'mobile-menu-overlay';
     
-    // Mobile menu content
     const mobileNavContent = document.createElement('div');
     mobileNavContent.className = 'mobile-nav-content';
     
-    // Close button
     const closeBtn = document.createElement('button');
     closeBtn.className = 'mobile-close-btn';
     closeBtn.innerHTML = '<i class="fas fa-times"></i>';
     closeBtn.setAttribute('aria-label', 'Close menu');
     
-    // Clone navigation links
     const mobileNavLinks = navLinks.cloneNode(true);
     mobileNavLinks.className = 'mobile-nav-links';
     
-    // Clone auth buttons
     const mobileAuthBtns = authButtons.cloneNode(true);
     mobileAuthBtns.className = 'mobile-auth-buttons';
     
-    // Build mobile menu
     mobileNavContent.appendChild(closeBtn);
     mobileNavContent.appendChild(mobileNavLinks);
     mobileNavContent.appendChild(mobileAuthBtns);
     mobileMenu.appendChild(mobileNavContent);
     document.body.appendChild(mobileMenu);
     
-    // Toggle mobile menu
     mobileMenuBtn.addEventListener('click', function() {
         mobileMenu.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -87,7 +84,6 @@ function initMobileNavigation() {
         document.body.style.overflow = '';
     });
     
-    // Close menu when clicking on links
     mobileMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', function() {
             mobileMenu.classList.remove('active');
@@ -95,7 +91,6 @@ function initMobileNavigation() {
         });
     });
     
-    // Close menu when clicking outside
     mobileMenu.addEventListener('click', function(e) {
         if (e.target === mobileMenu) {
             mobileMenu.classList.remove('active');
@@ -150,30 +145,29 @@ function initTournamentTimers() {
         updateTimerDisplay(id, 0, 0, 0, 0);
     }
     
-    // Initialize timers
+    if (tournamentTimerInterval) {
+        clearInterval(tournamentTimerInterval);
+    }
+
     updateAllTimers();
-    setInterval(updateAllTimers, 1000);
+    tournamentTimerInterval = setInterval(updateAllTimers, 1000);
 }
 
 // ==================== TOUCH OPTIMIZATION ====================
 function initTouchOptimization() {
-    // Add touch feedback to interactive elements
     const touchElements = document.querySelectorAll(
         'a, button, .tournament-card, .filter-btn, .btn, .feature-card'
     );
     
     touchElements.forEach(element => {
-        // Touch start effect
         element.addEventListener('touchstart', function() {
             this.classList.add('touch-active');
         }, { passive: true });
         
-        // Touch end effect
         element.addEventListener('touchend', function() {
             this.classList.remove('touch-active');
         }, { passive: true });
         
-        // Ensure minimum touch target size
         const rect = element.getBoundingClientRect();
         if (rect.width < 44 || rect.height < 44) {
             element.style.minWidth = '44px';
@@ -181,13 +175,11 @@ function initTouchOptimization() {
         }
     });
     
-    // Smooth scrolling for anchor links (including # for top)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
             const href = this.getAttribute('href');
             if (href === '#') {
-                // Scroll to top
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'
@@ -210,41 +202,20 @@ function initTouchOptimization() {
 
 // ==================== ZOOM PREVENTION ====================
 function initZoomPrevention() {
-    // Prevent double-tap zoom
-    let lastTouchEnd = 0;
-    document.addEventListener('touchend', function(event) {
-        const now = Date.now();
-        if (now - lastTouchEnd <= 300) {
-            event.preventDefault();
-        }
-        lastTouchEnd = now;
-    }, { passive: false });
-    
-    // Prevent pinch zoom
-    document.addEventListener('gesturestart', function(e) {
-        e.preventDefault();
-    });
-    
-    document.addEventListener('gesturechange', function(e) {
-        e.preventDefault();
-    });
-    
-    document.addEventListener('gestureend', function(e) {
-        e.preventDefault();
-    });
-    
-    // Fix viewport for mobile
+    // Restore old viewport behavior to avoid mobile text auto-zoom
     function setViewport() {
         const viewport = document.querySelector('meta[name="viewport"]');
         if (viewport) {
-            viewport.setAttribute('content', 
-                'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+            viewport.setAttribute(
+                'content',
+                'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
+            );
         }
     }
     
     setViewport();
+    document.documentElement.style.webkitTextSizeAdjust = '100%';
     
-    // Reset viewport on orientation change
     window.addEventListener('orientationchange', function() {
         setTimeout(setViewport, 100);
     });
@@ -252,7 +223,6 @@ function initZoomPrevention() {
 
 // ==================== SMOOTH ANIMATIONS ====================
 function initSmoothAnimations() {
-    // Animate tournament cards on load
     const tournamentCards = document.querySelectorAll('.tournament-card');
     
     tournamentCards.forEach((card, index) => {
@@ -266,7 +236,6 @@ function initSmoothAnimations() {
         }, index * 100);
     });
     
-    // Add hover effects for desktop
     if (!isTouchDevice()) {
         tournamentCards.forEach(card => {
             card.addEventListener('mouseenter', function() {
@@ -281,7 +250,6 @@ function initSmoothAnimations() {
         });
     }
     
-    // Animate feature cards on scroll
     const featureCards = document.querySelectorAll('.feature-card');
     
     const observerOptions = {
@@ -313,15 +281,12 @@ function initTournamentFilters() {
     
     filterButtons.forEach(button => {
         button.addEventListener('click', function() {
-            // Remove active class from all buttons
             filterButtons.forEach(btn => btn.classList.remove('active'));
             
-            // Add active class to clicked button
             this.classList.add('active');
             
             const filter = this.textContent.toLowerCase();
             
-            // Filter tournament cards
             tournamentCards.forEach(card => {
                 if (filter === 'all') {
                     card.style.display = 'block';
@@ -339,8 +304,17 @@ function initGameSelector() {
     const gameSelect = document.getElementById('gameSelect');
     if (gameSelect) {
         gameSelect.addEventListener('change', function() {
-            // Show loading state
+            const selectedValue = this.value;
+            if (!selectedValue) {
+                return;
+            }
+
             const tournamentGrid = document.querySelector('.tournament-grid');
+            if (!tournamentGrid) {
+                window.location.href = selectedValue;
+                return;
+            }
+
             const originalContent = tournamentGrid.innerHTML;
             
             tournamentGrid.innerHTML = `
@@ -350,12 +324,10 @@ function initGameSelector() {
                 </div>
             `;
             
-            // Simulate API call
             setTimeout(() => {
                 tournamentGrid.innerHTML = originalContent;
-                initTournamentTimers(); // Reinitialize timers
-                initTournamentFilters(); // Reinitialize filters
                 console.log(`Switched to ${this.options[this.selectedIndex].text} tournaments`);
+                window.location.href = selectedValue;
             }, 1000);
         });
     }
@@ -363,7 +335,6 @@ function initGameSelector() {
 
 // ==================== PERFORMANCE OPTIMIZATION ====================
 function initPerformanceOptimization() {
-    // Lazy loading for images
     if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -381,7 +352,6 @@ function initPerformanceOptimization() {
         });
     }
     
-    // Debounce resize events
     let resizeTimeout;
     window.addEventListener('resize', function() {
         clearTimeout(resizeTimeout);
@@ -393,7 +363,6 @@ function initPerformanceOptimization() {
 
 // ==================== BROWSER COMPATIBILITY ====================
 function initBrowserCompatibility() {
-    // Smooth scroll polyfill for older browsers
     if (!('scrollBehavior' in document.documentElement.style)) {
         const smoothScroll = function(target) {
             const start = window.pageYOffset;
@@ -419,7 +388,6 @@ function initBrowserCompatibility() {
             requestAnimationFrame(animation);
         };
         
-        // Override smooth scroll behavior
         const originalScrollTo = window.scrollTo;
         window.scrollTo = function(options) {
             if (options && options.behavior === 'smooth') {
@@ -436,10 +404,10 @@ function initButtonHandlers() {
     // For register buttons - using data attributes (recommended)
     document.querySelectorAll('[data-action="register"]').forEach(button => {
         button.addEventListener('click', function(e) {
-            const isLoggedIn = false; // This would come from your auth system
+            const isLoggedIn = false;
             if (!isLoggedIn) {
                 e.preventDefault();
-                window.location.href = 'Register/Sign Up/signup.html';
+                window.location.href = 'Register/register.html';
             }
         });
     });
@@ -447,7 +415,7 @@ function initButtonHandlers() {
     // For login buttons - using data attributes  
     document.querySelectorAll('[data-action="login"]').forEach(button => {
         button.addEventListener('click', function(e) {
-            const isLoggedIn = false; // This would come from your auth system
+            const isLoggedIn = false;
             if (!isLoggedIn) {
                 e.preventDefault();
                 window.location.href = 'Login/login.html';
@@ -457,23 +425,20 @@ function initButtonHandlers() {
     
     // Fallback for buttons without data attributes (using text content) but not in navigation
     document.querySelectorAll('.btn-primary:not([data-action])').forEach(button => {
-        // Skip buttons that are inside the navigation
         if (button.closest('nav')) {
             return;
         }
         
         button.addEventListener('click', function(e) {
             const buttonText = button.textContent.trim().toLowerCase();
-            const isLoggedIn = false; // This would come from your auth system
+            const isLoggedIn = false;
             
             if (!isLoggedIn) {
                 e.preventDefault();
                 
                 if (buttonText.includes('register') || buttonText.includes('join') || buttonText.includes('notify me')) {
-                    // Redirect to register page for register/join buttons
-                    window.location.href = 'Register/Sign Up/signup.html';
+                    window.location.href = 'Register/register.html';
                 } else if (buttonText.includes('login') || buttonText.includes('sign in')) {
-                    // Redirect to login page for login buttons
                     window.location.href = 'Login/login.html';
                 }
             }
@@ -637,7 +602,6 @@ const mobileStyles = `
 }
 `;
 
-// Inject styles
 const styleElement = document.createElement('style');
 styleElement.textContent = mobileStyles;
 document.head.appendChild(styleElement);

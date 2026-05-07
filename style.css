@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 :root {
     --primary-blue: #191B2D;
     --secondary-blue: #767897;
@@ -538,10 +540,6 @@ footer {
     
     .mobile-menu-btn {
         display: block;
-    }
-    
-    .hero h2 {
-        font-size: 2.5rem;
     }
     
     .tournament-grid {
