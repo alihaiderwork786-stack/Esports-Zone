@@ -1,586 +1,717 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
-:root {
-    --primary-blue: #191B2D;
-    --secondary-blue: #767897;
-    --accent: #FECE00;
-    --white: #FFFFFF;
-    --light-blue: #E8EBF5;
-    --dark-blue: #121420;
-}
-
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-body {
-    background-color: var(--white);
-    color: var(--dark-blue);
-    line-height: 1.6;
-}
-
-header {
-    background-color: var(--primary-blue);
-    padding: 0.8rem 1.5rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-}
-
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    gap: 1rem;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.logo-img {
-    height: 50px;
-    width: auto;
-}
-
-.logo h1 {
-    color: var(--white);
-    font-size: 1.8rem;
-    font-weight: 700;
-}
-
-.logo span {
-    color: var(--accent);
-}
-
-.nav-links {
-    display: flex;
-    list-style: none;
-    gap: 1.5rem;
-}
-
-.nav-links a {
-    color: var(--white);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s;
-    padding: 0.3rem 0;
-}
-
-.nav-links a:hover {
-    color: var(--accent);
-}
-
-.auth-buttons {
-    display: flex;
-    gap: 0.8rem;
-}
-
-.btn {
-    padding: 0.5rem 1.2rem;
-    border-radius: 4px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-decoration: none;
-    font-size: 0.9rem;
-}
-
-.btn-outline {
-    border: 2px solid var(--white);
-    color: var(--white);
-    background: transparent;
-}
-
-.btn-outline:hover {
-    background: var(--white);
-    color: var(--primary-blue);
-}
-
-.btn-primary {
-    background: var(--accent);
-    color: var(--primary-blue);
-    border: 2px solid var(--accent);
-}
-
-.btn-primary:hover {
-    background: transparent;
-    color: var(--accent);
-}
-
-/* HERO SECTION WITH LOCAL BACKGROUND IMAGE */
-.hero {
-    background: linear-gradient(rgba(25, 27, 45, 0.85), rgba(25, 27, 45, 0.90)), 
-                url('Images/background-homepage.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    color: var(--white);
-    padding: 5rem 1.5rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.hero-content {
-    max-width: 800px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-}
-
-.hero h2 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    font-weight: 700;
-}
-
-.hero p {
-    font-size: 1.2rem;
-    margin-bottom: 2.5rem;
-    opacity: 0.95;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    line-height: 1.8;
-}
-
-.hero p span {
-    color: var(--accent);
-    font-weight: 600;
-}
-
-.small-timer {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin: 20px 0;
-    font-size: 0.9rem;
-}
-
-.timer-part {
-    background: rgba(254, 206, 0, 0.2);
-    padding: 6px 12px;
-    border-radius: 6px;
-    min-width: 35px;
-    text-align: center;
-    border: 1px solid rgba(254, 206, 0, 0.3);
-}
-
-.timer-value {
-    font-weight: bold;
-    color: var(--accent);
-    font-size: 1.1rem;
-}
-
-.timer-label {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    color: var(--white);
-}
-
-.hero .btn-primary {
-    padding: 0.8rem 2.5rem;
-    font-size: 1.1rem;
-    margin-top: 1rem;
-    box-shadow: 0 4px 15px rgba(254, 206, 0, 0.3);
-    display: inline-block;
-}
-
-.hero .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(254, 206, 0, 0.4);
-}
-
-.section-title {
-    text-align: center;
-    margin: 3rem 0 2rem;
-    color: var(--primary-blue);
-}
-
-.section-title h2 {
-    font-size: 2.2rem;
-    margin-bottom: 0.5rem;
-}
-
-.section-title p {
-    color: var(--secondary-blue);
-    font-size: 1rem;
-}
-
-.tournaments {
-    padding: 1.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.tournament-filters {
-    display: flex;
-    justify-content: center;
-    gap: 0.8rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-}
-
-.filter-btn {
-    padding: 0.5rem 1.5rem;
-    background: var(--light-blue);
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s;
-}
-
-.filter-btn.active, .filter-btn:hover {
-    background: var(--primary-blue);
-    color: var(--white);
-}
-
-.tournament-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.8rem;
-}
-
-.tournament-card {
-    background: var(--white);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.tournament-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-}
-
-.card-header {
-    background: var(--primary-blue);
-    color: var(--white);
-    padding: 1.2rem;
-    text-align: center;
-}
-
-.card-header h3 {
-    font-size: 1.3rem;
-    margin-bottom: 0.3rem;
-}
-
-.card-body {
-    padding: 1.2rem;
-}
-
-.tournament-info {
-    margin-bottom: 1.2rem;
-}
-
-.info-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--light-blue);
-    font-size: 0.9rem;
-}
-
-.prize-pool {
-    background: var(--light-blue);
-    padding: 0.8rem;
-    border-radius: 6px;
-    text-align: center;
-    margin-bottom: 1.2rem;
-}
-
-.prize-pool h4 {
-    color: var(--primary-blue);
-    margin-bottom: 0.3rem;
-    font-size: 0.9rem;
-}
-
-.prize-amount {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--accent);
-}
-
-.card-footer {
-    padding: 0 1.2rem 1.2rem;
-}
-
-.features {
-    background: var(--light-blue);
-    padding: 4rem 1.5rem;
-}
-
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.feature-card {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s;
-}
-
-.feature-card:hover {
-    transform: translateY(-5px);
-}
-
-.feature-icon {
-    width: 70px;
-    height: 70px;
-    background: var(--primary-blue);
-    color: var(--white);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.2rem;
-    font-size: 1.8rem;
-}
-
-.feature-card h3 {
-    margin-bottom: 0.8rem;
-    color: var(--primary-blue);
-}
-
-.feature-card p {
-    color: var(--secondary-blue);
-    font-size: 0.95rem;
-}
-
-.how-it-works {
-    padding: 4rem 1.5rem;
-    background: var(--white);
-}
-
-.steps {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    max-width: 1000px;
-    margin: 2.5rem auto 0;
-}
-
-.step {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.step:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-}
-
-.step-number {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: var(--primary-blue);
-    color: var(--white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.7rem;
-    font-weight: 700;
-    margin: 0 auto 1.2rem;
-    transition: background 0.3s;
-}
-
-.step:hover .step-number {
-    background: var(--accent);
-}
-
-.step h3 {
-    font-size: 1.3rem;
-    margin-bottom: 0.8rem;
-    color: var(--primary-blue);
-}
-
-.step p {
-    font-size: 0.95rem;
-    color: var(--secondary-blue);
-    line-height: 1.6;
-}
-
-footer {
-    background: var(--dark-blue);
-    color: var(--white);
-    padding: 3rem 1.5rem 1.5rem;
-}
-
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 2.5rem;
-}
-
-.footer-logo {
-    flex: 1 1 300px;
-}
-
-.footer-logo .logo-img {
-    width: 140px;
-    height: auto;
-    margin-bottom: 1rem;
-}
-
-.footer-logo p {
-    color: var(--light-blue);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-}
-
-.footer-links {
-    flex: 1 1 150px;
-}
-
-.footer-links h3 {
-    margin-bottom: 1.2rem;
-    font-size: 1.2rem;
-    color: var(--accent);
-}
-
-.footer-links ul {
-    list-style: none;
-}
-
-.footer-links li {
-    margin-bottom: 0.7rem;
-}
-
-.footer-links a {
-    color: var(--light-blue);
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: color 0.3s;
-}
-
-.footer-links a:hover {
-    color: var(--accent);
-}
-
-.social-links {
-    display: flex;
-    gap: 0.8rem;
-    margin-top: 1rem;
-}
-
-.social-link {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--primary-blue);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-    text-decoration: none;
-    font-size: 1rem;
-    transition: background 0.3s;
-}
-
-.social-link.facebook:hover { background: #1877F2; }
-.social-link.youtube:hover { background: #FF0000; }
-.social-link.twitter:hover { background: #1DA1F2; }
-.social-link.instagram:hover { background: #E1306C; }
-.social-link.discord:hover { background: #5865F2; }
-
-.copyright {
-    text-align: center;
-    margin-top: 3rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--secondary-blue);
-    color: var(--light-blue);
-    font-size: 0.9rem;
-}
-
-.mobile-menu-btn {
-    display: none;
-    background: none;
-    border: none;
-    color: var(--white);
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-@media (max-width: 900px) {
-    .nav-links, .auth-buttons {
-        display: none;
-    }
-    
-    .mobile-menu-btn {
-        display: block;
-    }
-    
-    .tournament-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    }
-    
-    .hero {
-        background-attachment: scroll;
-        padding: 4rem 1.5rem;
-        min-height: 70vh;
-    }
-    
-    .hero h2 {
-        font-size: 2.2rem;
-    }
-    
-    .hero p {
-        font-size: 1.1rem;
-    }
-}
-
-@media (max-width: 600px) {
-    .hero {
-        padding: 3rem 1rem;
-        min-height: 60vh;
-    }
-    
-    .hero h2 {
-        font-size: 1.8rem;
-    }
-    
-    .hero p {
-        font-size: 1rem;
-    }
-    
-    .tournament-filters {
-        gap: 0.5rem;
-    }
-    
-    .filter-btn {
-        padding: 0.4rem 1rem;
-        font-size: 0.9rem;
-    }
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works - Esports Zone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="how-it-work.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="../Images/ez-logo.PNG" alt="EsportsZone Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../Tournaments/tournament.html">Tournaments</a></li>
+                <li><a href="#" style="color: var(--accent);">How It Works</a></li>
+                <li><a href="../Leaderboard/leaderboard.html">Leaderboards</a></li>
+                <li><a href="../About/about.html">About</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="../Login/login.html" class="btn btn-outline">Login</a>
+                <a href="../Register/register.html" class="btn btn-primary">Register</a>
+            </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-how-it-works">
+        <div class="hero-content">
+            <h1>Complete Guide to Esports Zone</h1>
+            <p>Learn how to register, join tournaments, compete, and win prizes step by step</p>
+        </div>
+    </section>
+
+    <!-- Quick Overview -->
+    <section class="overview">
+        <div class="container">
+            <h2>Getting Started is Easy</h2>
+            <div class="overview-cards">
+                <div class="overview-card">
+                    <i class="fas fa-user-plus"></i>
+                    <h3>1. Register</h3>
+                    <p>Create your account in 2 minutes</p>
+                </div>
+                <div class="overview-card">
+                    <i class="fas fa-coins"></i>
+                    <h3>2. Buy Coins</h3>
+                    <p>Purchase coins for tournament entries</p>
+                </div>
+                <div class="overview-card">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>3. Play & Compete</h3>
+                    <p>Show your skills and win matches</p>
+                </div>
+                <div class="overview-card">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h3>4. Win Prizes</h3>
+                    <p>Claim your rewards instantly</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Steps Section -->
+    <section class="detailed-steps">
+        <div class="container">
+            <h2>Detailed Step-by-Step Guide</h2>
+            
+            <!-- Step 1: Registration -->
+            <div class="step-detailed">
+                <div class="step-header">
+                    <div class="step-number">01</div>
+                    <h3>Account Registration</h3>
+                </div>
+                <div class="step-content">
+                    <div class="step-description">
+                        <h4>Create Your Player Profile</h4>
+                        <p>Start your esports journey by creating your account on Esports Zone.</p>
+                        <div class="requirements">
+                            <h5>What You Need:</h5>
+                            <ul>
+                                <li>Valid email address</li>
+                                <li>Game username/nickname</li>
+                                <li>Mobile number (for verification)</li>
+                                <li>Preferred games you play</li>
+                            </ul>
+                        </div>
+                        <div class="process">
+                            <h5>Registration Process:</h5>
+                            <ol>
+                                <li>Click "Register" button on top right</li>
+                                <li>Fill in your basic information</li>
+                                <li>Verify your email address</li>
+                                <li>Complete your player profile</li>
+                                <li>You're ready to join tournaments!</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="step-visual">
+                        <div class="visual-card">
+                            <i class="fas fa-user-check"></i>
+                            <p>Account verified and ready</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Buying Coins -->
+            <div class="step-detailed">
+                <div class="step-header">
+                    <div class="step-number">02</div>
+                    <h3>Buying Coins</h3>
+                </div>
+                <div class="step-content">
+                    <div class="step-description">
+                        <h4>Purchase Coins for Tournament Entries</h4>
+                        <p>All tournaments require coins for entry. Buy coins easily through our secure payment system.</p>
+
+                        <div class="coin-usage">
+                            <h5>Coins Can Be Used For:</h5>
+                            <ul>
+                                <li>Tournament entry fees</li>
+                                <li>In-game purchases</li>
+                                <li>Premium features</li>
+                                <li>Special events access</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="step-visual">
+                        <div class="visual-card">
+                            <i class="fas fa-coins"></i>
+                            <p>Secure coin purchase</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Tournament Joining -->
+            <div class="step-detailed">
+                <div class="step-header">
+                    <div class="step-number">03</div>
+                    <h3>Joining Tournaments</h3>
+                </div>
+                <div class="step-content">
+                    <div class="step-description">
+                        <h4>Find and Register for Events</h4>
+                        <p>Browse through various tournaments and choose the ones that match your skills.</p>
+                        <div class="tournament-types">
+                            <h5>Tournament Types Available:</h5>
+                            <div class="type-cards">
+                                <div class="type-card">
+                                    <i class="fas fa-coins"></i>
+                                    <span>Paid Tournaments</span>
+                                    <small>Entry fee required</small>
+                                </div>
+                                <div class="type-card">
+                                    <i class="fas fa-users"></i>
+                                    <span>Squad Battles</span>
+                                    <small>Team competitions</small>
+                                </div>
+                                <div class="type-card">
+                                    <i class="fas fa-crown"></i>
+                                    <span>Pro Leagues</span>
+                                    <small>Professional level</small>
+                                </div>
+                                <div class="type-card">
+                                    <i class="fas fa-star"></i>
+                                    <span>Premium Events</span>
+                                    <small>High stake tournaments</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="joining-process">
+                            <h5>How to Join:</h5>
+                            <ol>
+                                <li>Go to "Tournaments" page</li>
+                                <li>Filter by game, date, or type</li>
+                                <li>Click on tournament to view details</li>
+                                <li>Click "Join Tournament" button</li>
+                                <li>Pay entry fee using your coins</li>
+                                <li>Receive confirmation email</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="step-visual">
+                        <div class="visual-card">
+                            <i class="fas fa-calendar-check"></i>
+                            <p>Tournament schedule confirmed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Competition Process -->
+            <div class="step-detailed">
+                <div class="step-header">
+                    <div class="step-number">04</div>
+                    <h3>Competition & Matches</h3>
+                </div>
+                <div class="step-content">
+                    <div class="step-description">
+                        <h4>Play Your Matches</h4>
+                        <p>Compete against other players following our fair play rules and tournament structure.</p>
+                        
+                        <div class="match-process">
+                            <h5>Match Process:</h5>
+                            <div class="process-steps">
+                                <div class="process-step">
+                                    <div class="process-icon">1</div>
+                                    <div class="process-text">
+                                        <strong>Bracket Assignment</strong>
+                                        <p>Get placed in tournament bracket automatically</p>
+                                    </div>
+                                </div>
+                                <div class="process-step">
+                                    <div class="process-icon">2</div>
+                                    <div class="process-text">
+                                        <strong>Schedule Match</strong>
+                                        <p>Coordinate match time with your opponent</p>
+                                    </div>
+                                </div>
+                                <div class="process-step">
+                                    <div class="process-icon">3</div>
+                                    <div class="process-text">
+                                        <strong>Play Match</strong>
+                                        <p>Play at scheduled time with fair play</p>
+                                    </div>
+                                </div>
+                                <div class="process-step">
+                                    <div class="process-icon">4</div>
+                                    <div class="process-text">
+                                        <strong>Report Results</strong>
+                                        <p>Submit match results with screenshots</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rules">
+                            <h5>Important Rules:</h5>
+                            <ul>
+                                <li>Be punctual for scheduled matches</li>
+                                <li>No cheating or third-party tools</li>
+                                <li>Respect other players</li>
+                                <li>Submit valid proof of results</li>
+                                <li>Follow game-specific rules</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="step-visual">
+                        <div class="visual-card">
+                            <i class="fas fa-flag-checkered"></i>
+                            <p>Fair competition ensured</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Winning & Rewards -->
+            <div class="step-detailed">
+                <div class="step-header">
+                    <div class="step-number">05</div>
+                    <h3>Winning & Claiming Rewards</h3>
+                </div>
+                <div class="step-content">
+                    <div class="step-description">
+                        <h4>Receive Your Prizes</h4>
+                        <p>Claim your hard-earned rewards quickly and securely through our system.</p>
+                        
+                        <div class="prize-types">
+                            <h5>Types of Rewards:</h5>
+                            <div class="prize-cards">
+                                <div class="prize-card">
+                                    <i class="fas fa-money-bill"></i>
+                                    <span>Cash Prizes</span>
+                                    <small>Direct bank transfer</small>
+                                </div>
+                                <div class="prize-card">
+                                    <i class="fas fa-gem"></i>
+                                    <span>Esports Coins</span>
+                                    <small>Platform currency</small>
+                                </div>
+                                <div class="prize-card">
+                                    <i class="fas fa-award"></i>
+                                    <span>Gaming Gear</span>
+                                    <small>Physical products</small>
+                                </div>
+                                <div class="prize-card">
+                                    <i class="fas fa-star"></i>
+                                    <span>Premium Badges</span>
+                                    <small>Profile recognition</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="claim-process">
+                            <h5>How to Claim Rewards:</h5>
+                            <ol>
+                                <li>Check tournament results page</li>
+                                <li>Go to "My Rewards" section</li>
+                                <li>Select the tournament you won</li>
+                                <li>Click "Claim Reward" button</li>
+                                <li>Provide payout details</li>
+                                <li>Receive confirmation</li>
+                                <li>Get your prize within 24-48 hours</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="step-visual">
+                        <div class="visual-card">
+                            <i class="fas fa-gift"></i>
+                            <p>Quick reward processing</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Guide Section -->
+    <section class="payment-guide">
+        <div class="container">
+            <h2>Buying Coins - Complete Guide</h2>
+            <p class="section-subtitle">Learn how to purchase coins for tournament entries and in-platform purchases</p>
+
+            <div class="payment-steps">
+                <!-- Step 1 -->
+                <div class="payment-step">
+                    <div class="payment-step-header">
+                        <div class="step-indicator">1</div>
+                        <h3>Select Payment Method</h3>
+                    </div>
+                    <div class="payment-step-content">
+                        <p>Choose from our secure payment options:</p>
+                        <div class="method-options">
+                            <div class="method-option active" data-method="easypaisa">
+                                <i class="fas fa-mobile-alt"></i>
+                                <div class="method-info">
+                                    <strong>Easypaisa</strong>
+                                    <span>Mobile Account</span>
+                                </div>
+                            </div>
+                            <div class="method-option" data-method="jazzcash">
+                                <i class="fas fa-sim-card"></i>
+                                <div class="method-info">
+                                    <strong>JazzCash</strong>
+                                    <span>Mobile Wallet</span>
+                                </div>
+                            </div>
+                            <div class="method-option" data-method="bank">
+                                <i class="fas fa-university"></i>
+                                <div class="method-info">
+                                    <strong>Bank Transfer</strong>
+                                    <span>Direct Transfer</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="payment-step">
+                    <div class="payment-step-header">
+                        <div class="step-indicator">2</div>
+                        <h3>Make Payment</h3>
+                    </div>
+                    <div class="payment-step-content">
+                        <div class="account-details">
+                            <h4>Our Official Account Details:</h4>
+                            <div class="detail-item">
+                                <span class="label">Account Number:</span>
+                                <span class="value" id="accountNumber">0312-3456789</span>
+                                <button class="copy-btn" onclick="copyToClipboard('accountNumber')">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Account Name:</span>
+                                <span class="value">Esports Zone Official</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Payment Network:</span>
+                                <span class="value" id="paymentNetwork">Easypaisa</span>
+                            </div>
+                        </div>
+                        <div class="payment-instructions">
+                            <h5>Payment Instructions:</h5>
+                            <ul>
+                                <li>Go to your payment app (Easypaisa/JazzCash/Bank App)</li>
+                                <li>Enter our account number shown above</li>
+                                <li>Enter the amount you want to pay</li>
+                                <li><strong>Important:</strong> Include your username in transaction remarks</li>
+                                <li>Complete the payment</li>
+                                <li>Save the transaction ID and screenshot</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="payment-step">
+                    <div class="payment-step-header">
+                        <div class="step-indicator">3</div>
+                        <h3>Upload Payment Proof</h3>
+                    </div>
+                    <div class="payment-step-content">
+                        <p>Upload screenshot of your payment confirmation:</p>
+                        <div class="upload-section">
+                            <div class="upload-area" id="uploadArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <h4>Click to Upload Screenshot</h4>
+                                <p>Drag & drop or click to select file</p>
+                                <span>Supports: JPG, PNG, JPEG (Max 5MB)</span>
+                                <input type="file" id="paymentScreenshot" accept="image/*" hidden>
+                            </div>
+                            <div class="upload-preview" id="uploadPreview">
+                                <div class="preview-content">
+                                    <img id="previewImage" src="" alt="Payment Screenshot">
+                                    <div class="preview-actions">
+                                        <button class="action-btn replace" onclick="triggerUpload()">
+                                            <i class="fas fa-sync"></i> Replace
+                                        </button>
+                                        <button class="action-btn remove" onclick="removeScreenshot()">
+                                            <i class="fas fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="screenshot-requirements">
+                            <h5>Screenshot Must Show:</h5>
+                            <div class="requirements-grid">
+                                <div class="requirement">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Transaction ID clearly visible</span>
+                                </div>
+                                <div class="requirement">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Payment amount and date</span>
+                                </div>
+                                <div class="requirement">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Our account number</span>
+                                </div>
+                                <div class="requirement">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Your username in remarks</span>
+                                </div>
+                            </div>
+                            <div class="warning-note">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>Without screenshot, coins will NOT be transferred</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="payment-step">
+                    <div class="payment-step-header">
+                        <div class="step-indicator">4</div>
+                        <h3>Submit & Verification</h3>
+                    </div>
+                    <div class="payment-step-content">
+                        <div class="verification-form">
+                            <h4>Submit Payment Details</h4>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="transactionId">Transaction ID *</label>
+                                    <input type="text" id="transactionId" placeholder="Enter transaction ID from payment">
+                                </div>
+                                <div class="form-group">
+                                    <label for="paymentAmount">Amount Paid (PKR) *</label>
+                                    <input type="number" id="paymentAmount" placeholder="Enter amount">
+                                </div>
+                                <div class="form-group">
+                                    <label for="userUsername">Your Username *</label>
+                                    <input type="text" id="userUsername" placeholder="Enter your Esports Zone username">
+                                </div>
+                            </div>
+                            <button class="submit-payment-btn" id="submitPaymentBtn" onclick="submitPayment()">
+                                <i class="fas fa-paper-plane"></i>
+                                Submit Payment Details
+                            </button>
+                        </div>
+                        <div class="verification-process">
+                            <h5>What Happens Next:</h5>
+                            <div class="process-timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-marker">1</div>
+                                    <div class="timeline-content">
+                                        <strong>Submission Received</strong>
+                                        <p>We get your payment details instantly</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-marker">2</div>
+                                    <div class="timeline-content">
+                                        <strong>Verification Started</strong>
+                                        <p>Our team checks your payment (2-8 hours)</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-marker">3</div>
+                                    <div class="timeline-content">
+                                        <strong>Coins Added</strong>
+                                        <p>Coins automatically added to your account</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-marker">4</div>
+                                    <div class="timeline-content">
+                                        <strong>Confirmation Sent</strong>
+                                        <p>You receive email and app notification</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partner Program Section -->
+    <section class="partner-program">
+        <div class="container">
+            <div class="partner-header">
+                <h2>Coming Soon: Partner Program</h2>
+                <p>Exciting opportunities for content creators coming your way!</p>
+                <div class="coming-soon-badge">
+                    <i class="fas fa-clock"></i>
+                    <span>Launching Soon</span>
+                </div>
+            </div>
+            
+            <div class="partner-benefits">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3>Monthly Earnings</h3>
+                    <p>Earn regular monthly income through our revenue sharing program</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <img src="../Images/ez-logo.PNG" alt="EZ Partner Badge" class="badge-image">
+                    </div>
+                    <h3>Unique EZ Badge</h3>
+                    <p>Get exclusive partner badge for your profile recognition</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Exclusive Tournaments</h3>
+                    <p>Access to special partner-only tournaments with bigger prize pools</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Growth Support</h3>
+                    <p>We help promote your content and grow your audience</p>
+                </div>
+            </div>
+            
+            <div class="partner-requirements">
+                <h3>Partner Program Requirements (Coming Soon):</h3>
+                <ul>
+                    <li>Minimum 10,000 subscribers/followers</li>
+                    <li>Active content creator on YouTube, Twitch, or Facebook Gaming</li>
+                    <li>Regular content creation (at least 3 videos/streams per week)</li>
+                    <li>Good standing in gaming community</li>
+                </ul>
+            </div>
+            
+            <div class="partner-cta">
+                <h3>Interested in becoming an Esports Zone Partner?</h3>
+                <p>Stay tuned for our official launch announcement!</p>
+                <div class="notify-section">
+                    <p>Get notified when partner program launches:</p>
+                    <form action="https://api.web3forms.com/submit" method="POST" class="notify-form">
+                        <input type="hidden" name="access_key" value="8519617d-f164-4420-9322-97e66baa1228">
+                        <input type="hidden" name="subject" value="New Partner Program Notify Signup">
+                        <input type="hidden" name="from_name" value="Esports Zone Website">
+                        <input type="hidden" name="redirect" value="https://web3forms.com/success">
+                        <input type="email" name="email" id="partnerEmail" placeholder="Enter your email" class="notify-input" required>
+                        <button type="submit" class="notify-btn">Notify Me</button>
+                    </form>
+                    <div class="success-message" id="successMessage"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section class="support-section">
+        <div class="container">
+            <div class="support-content">
+                <h2>Need Help? We're Here!</h2>
+                <p>Our support team is available to help you with any questions or issues.</p>
+                <div class="support-options">
+                    <div class="support-option">
+                        <i class="fas fa-envelope"></i>
+                        <h4>Email Support</h4>
+                        <p>support@esportszone.com</p>
+                        <span>Response within 2 hours</span>
+                    </div>
+                    <div class="support-option">
+                        <i class="fas fa-phone"></i>
+                        <h4>Phone Support</h4>
+                        <p>+92 335-8423786</p>
+                        <span>Available 10AM - 10PM</span>
+                    </div>
+                    <div class="support-option">
+                        <i class="fas fa-comments"></i>
+                        <h4>Live Chat</h4>
+                        <p>Available on website</p>
+                        <span>Instant help</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <!-- Logo Section -->
+            <div class="footer-logo">
+                <div class="logo">
+                    <img src="../Images/ez-logo.PNG" alt="EsportsZone Logo" class="logo-img">
+                </div>
+
+                <p>Esports Zone Official Social Media Account – Subscribe Now & Stay Updated With The Latest Tournaments And New Updates News</p>
+
+                <div class="social-links">
+                    <a href="#" class="social-link facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link youtube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-link twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link discord"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../Tournaments/tournament.html">Tournaments</a></li>
+                    <li><a href="../Leaderboard/leaderboard.html">Leaderboards</a></li>
+                    <li><a href="how-it-work.html">How to Play</a></li>
+                </ul>
+            </div>
+
+            <!-- Legal Links -->
+            <div class="footer-links">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="../Cookie Policy/cookieploicy.html">Cookie Policy</a></li>
+                    <li><a href="#">Refund Policy</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="footer-links">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>support@esportszone.com</li>
+                    <li>+92 335-8423786</li>
+                    <li>Thokar Niaz Baig, Lahore, Pakistan</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2025 Esports Zone. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay">
+        <div class="mobile-nav-content">
+            <button class="mobile-close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+            <ul class="mobile-nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../Tournaments/tournament.html">Tournaments</a></li>
+                <li><a href="#" style="color: var(--accent);">How It Works</a></li>
+                <li><a href="../Leaderboard/leaderboard.html">Leaderboards</a></li>
+                <li><a href="../About/about.html">About</a></li>
+            </ul>
+            <div class="mobile-auth-buttons">
+                <a href="../Login/login.html" class="btn btn-outline">Login</a>
+                <a href="../Register/register.html" class="btn btn-primary">Register</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="how-it-work.js"></script>
+</body>
+</html>
