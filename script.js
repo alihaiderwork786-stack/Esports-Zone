@@ -1,52 +1,28 @@
-// esports-zone-complete.js - Full Mobile Optimized with Header Size Fixed
+// esports-zone-complete.js - Header untouched (matches script 2)
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Esports Zone - Loading Complete Mobile Optimization');
     
-    // 1. Mobile Navigation
     initMobileNavigation();
-    
-    // 2. Tournament Countdown Timers
     initTournamentTimers();
-    
-    // 3. Mobile Touch Optimization
     initTouchOptimization();
-    
-    // 4. Prevent Zoom Issues
     initZoomPrevention();
-    
-    // 5. Smooth Animations
     initSmoothAnimations();
-    
-    // 6. Tournament Filters
     initTournamentFilters();
-    
-    // 7. Game Selector
     initGameSelector();
-    
-    // 8. Performance Optimization
     initPerformanceOptimization();
-    
-    // 9. Browser Compatibility
     initBrowserCompatibility();
-    
-    // 10. Button Handlers
     initButtonHandlers();
 });
 
 let tournamentTimerInterval = null;
 
-// ==================== MOBILE NAVIGATION ====================
+// ==================== MOBILE NAVIGATION (no header style changes) ====================
 function initMobileNavigation() {
     const nav = document.querySelector('nav');
     const navLinks = document.querySelector('.nav-links');
     const authButtons = document.querySelector('.auth-buttons');
     if (!nav || !navLinks || !authButtons) return;
-    
-    // Ensure nav has consistent base styling
-    nav.style.display = 'flex';
-    nav.style.alignItems = 'center';
-    nav.style.justifyContent = 'space-between';
     
     // Create mobile menu button
     const mobileMenuBtn = document.createElement('button');
@@ -59,32 +35,26 @@ function initMobileNavigation() {
     const mobileMenu = document.createElement('div');
     mobileMenu.className = 'mobile-menu-overlay';
     
-    // Mobile menu content
     const mobileNavContent = document.createElement('div');
     mobileNavContent.className = 'mobile-nav-content';
     
-    // Close button
     const closeBtn = document.createElement('button');
     closeBtn.className = 'mobile-close-btn';
     closeBtn.innerHTML = '<i class="fas fa-times"></i>';
     closeBtn.setAttribute('aria-label', 'Close menu');
     
-    // Clone navigation links
     const mobileNavLinks = navLinks.cloneNode(true);
     mobileNavLinks.className = 'mobile-nav-links';
     
-    // Clone auth buttons
     const mobileAuthBtns = authButtons.cloneNode(true);
     mobileAuthBtns.className = 'mobile-auth-buttons';
     
-    // Build mobile menu
     mobileNavContent.appendChild(closeBtn);
     mobileNavContent.appendChild(mobileNavLinks);
     mobileNavContent.appendChild(mobileAuthBtns);
     mobileMenu.appendChild(mobileNavContent);
     document.body.appendChild(mobileMenu);
     
-    // Toggle mobile menu
     mobileMenuBtn.addEventListener('click', function() {
         mobileMenu.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -95,7 +65,6 @@ function initMobileNavigation() {
         document.body.style.overflow = '';
     });
     
-    // Close menu when clicking on links
     mobileMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', function() {
             mobileMenu.classList.remove('active');
@@ -103,7 +72,6 @@ function initMobileNavigation() {
         });
     });
     
-    // Close menu when clicking outside
     mobileMenu.addEventListener('click', function(e) {
         if (e.target === mobileMenu) {
             mobileMenu.classList.remove('active');
@@ -122,20 +90,16 @@ function initTournamentTimers() {
     
     function updateAllTimers() {
         const now = new Date().getTime();
-        
         for (const [id, targetTime] of Object.entries(tournamentDates)) {
             const distance = targetTime - now;
-            
             if (distance < 0) {
                 resetTimer(id);
                 continue;
             }
-            
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            
             updateTimerDisplay(id, days, hours, minutes, seconds);
         }
     }
@@ -147,7 +111,6 @@ function initTournamentTimers() {
             minutes: document.getElementById(`${id}-minutes`),
             seconds: document.getElementById(`${id}-seconds`)
         };
-        
         if (elements.days) elements.days.textContent = days.toString().padStart(2, '0');
         if (elements.hours) elements.hours.textContent = hours.toString().padStart(2, '0');
         if (elements.minutes) elements.minutes.textContent = minutes.toString().padStart(2, '0');
@@ -159,26 +122,16 @@ function initTournamentTimers() {
     }
     
     if (tournamentTimerInterval) clearInterval(tournamentTimerInterval);
-    
     updateAllTimers();
     tournamentTimerInterval = setInterval(updateAllTimers, 1000);
 }
 
 // ==================== TOUCH OPTIMIZATION ====================
 function initTouchOptimization() {
-    const touchElements = document.querySelectorAll(
-        'a, button, .tournament-card, .filter-btn, .btn, .feature-card'
-    );
-    
+    const touchElements = document.querySelectorAll('a, button, .tournament-card, .filter-btn, .btn, .feature-card');
     touchElements.forEach(element => {
-        element.addEventListener('touchstart', function() {
-            this.classList.add('touch-active');
-        }, { passive: true });
-        
-        element.addEventListener('touchend', function() {
-            this.classList.remove('touch-active');
-        }, { passive: true });
-        
+        element.addEventListener('touchstart', function() { this.classList.add('touch-active'); }, { passive: true });
+        element.addEventListener('touchend', function() { this.classList.remove('touch-active'); }, { passive: true });
         const rect = element.getBoundingClientRect();
         if (rect.width < 44 || rect.height < 44) {
             element.style.minWidth = '44px';
@@ -265,19 +218,13 @@ function initSmoothAnimations() {
 function initTournamentFilters() {
     const filterButtons = document.querySelectorAll('.filter-btn:not(select)');
     const tournamentCards = document.querySelectorAll('.tournament-card');
-    
     filterButtons.forEach(button => {
         button.addEventListener('click', function() {
             filterButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
             const filter = this.textContent.toLowerCase();
             tournamentCards.forEach(card => {
-                if (filter === 'all') {
-                    card.style.display = 'block';
-                } else {
-                    const cardText = card.textContent.toLowerCase();
-                    card.style.display = cardText.includes(filter) ? 'block' : 'none';
-                }
+                card.style.display = (filter === 'all' || card.textContent.toLowerCase().includes(filter)) ? 'block' : 'none';
             });
         });
     });
@@ -290,19 +237,15 @@ function initGameSelector() {
         gameSelect.addEventListener('change', function() {
             const selectedValue = this.value;
             if (!selectedValue) return;
-            
             const tournamentGrid = document.querySelector('.tournament-grid');
             if (!tournamentGrid) {
                 window.location.href = selectedValue;
                 return;
             }
-            
             const originalContent = tournamentGrid.innerHTML;
             tournamentGrid.innerHTML = `<div class="loading-tournaments"><div class="loading-spinner"></div><p>Loading ${this.options[this.selectedIndex].text} tournaments...</p></div>`;
-            
             setTimeout(() => {
                 tournamentGrid.innerHTML = originalContent;
-                console.log(`Switched to ${this.options[this.selectedIndex].text} tournaments`);
                 window.location.href = selectedValue;
             }, 1000);
         });
@@ -312,7 +255,7 @@ function initGameSelector() {
 // ==================== PERFORMANCE OPTIMIZATION ====================
 function initPerformanceOptimization() {
     if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
+        const imageObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const img = entry.target;
@@ -324,12 +267,8 @@ function initPerformanceOptimization() {
         });
         document.querySelectorAll('img[data-src]').forEach(img => imageObserver.observe(img));
     }
-    
     let resizeTimeout;
-    window.addEventListener('resize', function() {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(function() {}, 250);
-    });
+    window.addEventListener('resize', () => { clearTimeout(resizeTimeout); resizeTimeout = setTimeout(() => {}, 250); });
 }
 
 // ==================== BROWSER COMPATIBILITY ====================
@@ -357,62 +296,41 @@ function initBrowserCompatibility() {
         };
         const originalScrollTo = window.scrollTo;
         window.scrollTo = function(options) {
-            if (options && options.behavior === 'smooth') {
-                smoothScroll(options.top);
-            } else {
-                originalScrollTo.apply(this, arguments);
-            }
+            if (options && options.behavior === 'smooth') smoothScroll(options.top);
+            else originalScrollTo.apply(this, arguments);
         };
     }
 }
 
 // ==================== BUTTON HANDLERS ====================
 function initButtonHandlers() {
-    document.querySelectorAll('[data-action="register"]').forEach(button => {
-        button.addEventListener('click', function(e) {
-            const isLoggedIn = false;
-            if (!isLoggedIn) {
-                e.preventDefault();
-                window.location.href = 'Register/register.html';
-            }
-        });
+    document.querySelectorAll('[data-action="register"]').forEach(btn => {
+        btn.addEventListener('click', (e) => { e.preventDefault(); window.location.href = 'Register/register.html'; });
     });
-    
-    document.querySelectorAll('[data-action="login"]').forEach(button => {
-        button.addEventListener('click', function(e) {
-            const isLoggedIn = false;
-            if (!isLoggedIn) {
-                e.preventDefault();
+    document.querySelectorAll('[data-action="login"]').forEach(btn => {
+        btn.addEventListener('click', (e) => { e.preventDefault(); window.location.href = 'Login/login.html'; });
+    });
+    document.querySelectorAll('.btn-primary:not([data-action])').forEach(btn => {
+        if (btn.closest('nav')) return;
+        btn.addEventListener('click', (e) => {
+            const text = btn.textContent.trim().toLowerCase();
+            e.preventDefault();
+            if (text.includes('register') || text.includes('join') || text.includes('notify me')) {
+                window.location.href = 'Register/register.html';
+            } else if (text.includes('login') || text.includes('sign in')) {
                 window.location.href = 'Login/login.html';
             }
         });
     });
-    
-    document.querySelectorAll('.btn-primary:not([data-action])').forEach(button => {
-        if (button.closest('nav')) return;
-        button.addEventListener('click', function(e) {
-            const buttonText = button.textContent.trim().toLowerCase();
-            const isLoggedIn = false;
-            if (!isLoggedIn) {
-                e.preventDefault();
-                if (buttonText.includes('register') || buttonText.includes('join') || buttonText.includes('notify me')) {
-                    window.location.href = 'Register/register.html';
-                } else if (buttonText.includes('login') || buttonText.includes('sign in')) {
-                    window.location.href = 'Login/login.html';
-                }
-            }
-        });
-    });
 }
 
-// ==================== UTILITY ====================
 function isTouchDevice() {
     return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
 }
 
-// ==================== INJECT MOBILE STYLES (HEADER SIZE FIXED) ====================
+// ==================== INJECT MOBILE STYLES (NO HEADER CHANGES) ====================
 const mobileStyles = `
-/* Mobile Menu Styles */
+/* Mobile Menu & Touch Styles ONLY – header untouched */
 .mobile-menu-btn {
     display: none;
     background: none;
@@ -469,9 +387,7 @@ const mobileStyles = `
     gap: 1rem;
     margin: 2rem 0;
 }
-.mobile-nav-links li {
-    list-style: none;
-}
+.mobile-nav-links li { list-style: none; }
 .mobile-nav-links a {
     color: white;
     text-decoration: none;
@@ -486,59 +402,10 @@ const mobileStyles = `
     flex-direction: column;
     gap: 1rem;
 }
-
-/* HEADER SIZE FIX – matches leaderboard page */
-nav {
-    padding: 0.8rem 2rem !important;
-    min-height: 70px !important;
-    height: auto !important;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
-}
-nav .logo {
-    font-size: 1.5rem !important;
-    font-weight: bold !important;
-    margin: 0 !important;
-    line-height: 1.2 !important;
-}
-.nav-links {
-    display: flex;
-    gap: 2rem;
-    margin: 0;
-    padding: 0;
-    align-items: center;
-}
-.nav-links li {
-    list-style: none;
-    margin: 0;
-}
-.nav-links a {
-    font-size: 1rem;
-    padding: 0.5rem 0;
-    white-space: nowrap;
-}
-.auth-buttons {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
-.auth-buttons .btn {
-    padding: 0.5rem 1.2rem;
-    font-size: 0.9rem;
-}
-.mobile-menu-btn {
-    line-height: 1;
-    padding: 8px 12px;
-    margin: 0;
-}
-
-/* Touch Optimization */
 .touch-active {
     transform: scale(0.95) !important;
     transition: transform 0.1s ease !important;
 }
-
-/* Loading States */
 .loading-tournaments {
     text-align: center;
     padding: 3rem;
@@ -557,39 +424,15 @@ nav .logo {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
-/* Mobile Responsive */
 @media (max-width: 768px) {
-    .mobile-menu-btn {
-        display: block;
-    }
-    .nav-links, .auth-buttons {
-        display: none;
-    }
-    nav {
-        padding: 0.6rem 1rem !important;
-        min-height: 65px !important;
-    }
-    nav .logo {
-        font-size: 1.3rem;
-    }
-    .tournament-grid {
-        grid-template-columns: 1fr !important;
-    }
-    .features-grid {
-        grid-template-columns: 1fr !important;
-    }
-    .tournament-card {
-        margin: 0 10px;
-    }
+    .mobile-menu-btn { display: block; }
+    .nav-links, .auth-buttons { display: none; }
+    .tournament-grid { grid-template-columns: 1fr !important; }
+    .features-grid { grid-template-columns: 1fr !important; }
+    .tournament-card { margin: 0 10px; }
 }
-
-/* iOS Specific */
 @supports (-webkit-touch-callout: none) {
-    .tournament-card {
-        -webkit-backdrop-filter: blur(10px);
-        backdrop-filter: blur(10px);
-    }
+    .tournament-card { -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
 }
 `;
 
@@ -597,4 +440,4 @@ const styleElement = document.createElement('style');
 styleElement.textContent = mobileStyles;
 document.head.appendChild(styleElement);
 
-console.log('Esports Zone - Complete with Header Size Fixed!');
+console.log('Esports Zone - Header completely untouched (matches script 2)');
