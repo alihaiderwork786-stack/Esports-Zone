@@ -1,13 +1,13 @@
-// esports-zone-complete.js - Fixed Mobile Optimized JavaScript
+// tournaments.js - Complete Mobile Optimized JavaScript for Tournaments Page
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Esports Zone - Loading Complete Mobile Optimization');
+    console.log('Esports Zone Tournaments - Loading Complete Mobile Optimization');
     
     // 1. Mobile Navigation
     initMobileNavigation();
     
-    // 2. Tournament Countdown Timers
-    initTournamentTimers();
+    // 2. Access Card Animations
+    initAccessAnimations();
     
     // 3. Mobile Touch Optimization
     initTouchOptimization();
@@ -15,35 +15,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // 4. Prevent Zoom Issues
     initZoomPrevention();
     
-    // 5. Smooth Animations
-    initSmoothAnimations();
+    // 5. Button Handlers
+    initButtonHandlers();
     
-    // 6. Tournament Filters
-    initTournamentFilters();
-    
-    // 7. Game Selector
-    initGameSelector();
-    
-    // 8. Performance Optimization
+    // 6. Performance Optimization
     initPerformanceOptimization();
     
-    // 9. Browser Compatibility
+    // 7. Browser Compatibility
     initBrowserCompatibility();
-    
-    // 10. Button Handlers (NEW - Fixed)
-    initButtonHandlers();
 });
-
-let tournamentTimerInterval = null;
 
 // ==================== MOBILE NAVIGATION ====================
 function initMobileNavigation() {
     const nav = document.querySelector('nav');
     const navLinks = document.querySelector('.nav-links');
     const authButtons = document.querySelector('.auth-buttons');
-    if (!nav || !navLinks || !authButtons) {
-        return;
-    }
     
     // Create mobile menu button
     const mobileMenuBtn = document.createElement('button');
@@ -109,67 +95,42 @@ function initMobileNavigation() {
     });
 }
 
-// ==================== TOURNAMENT TIMERS ====================
-function initTournamentTimers() {
-    const tournamentDates = {
-        'ff': new Date('2025-09-28T15:00:00Z').getTime(),
-        'squad': new Date('2025-10-05T17:00:00Z').getTime(),
-        'pro': new Date('2025-10-15T16:00:00Z').getTime()
-    };
+// ==================== ACCESS CARD ANIMATIONS ====================
+function initAccessAnimations() {
+    const accessCard = document.querySelector('.access-card');
     
-    function updateAllTimers() {
-        const now = new Date().getTime();
+    if (accessCard) {
+        // Add hover effect for desktop
+        if (!isTouchDevice()) {
+            accessCard.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+                this.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
+            });
+            
+            accessCard.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.1)';
+            });
+        }
         
-        for (const [id, targetTime] of Object.entries(tournamentDates)) {
-            const distance = targetTime - now;
-            
-            if (distance < 0) {
-                resetTimer(id);
-                continue;
-            }
-            
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            
-            updateTimerDisplay(id, days, hours, minutes, seconds);
+        // Add pulse animation to login button
+        const loginBtn = document.querySelector('.login-redirect-btn');
+        if (loginBtn) {
+            setInterval(() => {
+                loginBtn.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    loginBtn.style.transform = 'scale(1)';
+                }, 500);
+            }, 3000);
         }
     }
-    
-    function updateTimerDisplay(id, days, hours, minutes, seconds) {
-        const elements = {
-            days: document.getElementById(`${id}-days`),
-            hours: document.getElementById(`${id}-hours`),
-            minutes: document.getElementById(`${id}-minutes`),
-            seconds: document.getElementById(`${id}-seconds`)
-        };
-        
-        if (elements.days) elements.days.textContent = days.toString().padStart(2, '0');
-        if (elements.hours) elements.hours.textContent = hours.toString().padStart(2, '0');
-        if (elements.minutes) elements.minutes.textContent = minutes.toString().padStart(2, '0');
-        if (elements.seconds) elements.seconds.textContent = seconds.toString().padStart(2, '0');
-    }
-    
-    function resetTimer(id) {
-        updateTimerDisplay(id, 0, 0, 0, 0);
-    }
-    
-    // Avoid duplicate intervals when re-initialized
-    if (tournamentTimerInterval) {
-        clearInterval(tournamentTimerInterval);
-    }
-
-    // Initialize timers
-    updateAllTimers();
-    tournamentTimerInterval = setInterval(updateAllTimers, 1000);
 }
 
 // ==================== TOUCH OPTIMIZATION ====================
 function initTouchOptimization() {
     // Add touch feedback to interactive elements
     const touchElements = document.querySelectorAll(
-        'a, button, .tournament-card, .filter-btn, .btn, .feature-card'
+        'a, button, .access-card, .login-redirect-btn, .social-link'
     );
     
     touchElements.forEach(element => {
@@ -191,7 +152,7 @@ function initTouchOptimization() {
         }
     });
     
-    // Smooth scrolling for anchor links (including # for top)
+    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -220,19 +181,39 @@ function initTouchOptimization() {
 
 // ==================== ZOOM PREVENTION ====================
 function initZoomPrevention() {
-    // Restore old viewport behavior to avoid mobile text auto-zoom
+    // Prevent double-tap zoom
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function(event) {
+        const now = Date.now();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, { passive: false });
+    
+    // Prevent pinch zoom
+    document.addEventListener('gesturestart', function(e) {
+        e.preventDefault();
+    });
+    
+    document.addEventListener('gesturechange', function(e) {
+        e.preventDefault();
+    });
+    
+    document.addEventListener('gestureend', function(e) {
+        e.preventDefault();
+    });
+    
+    // Fix viewport for mobile
     function setViewport() {
         const viewport = document.querySelector('meta[name="viewport"]');
         if (viewport) {
-            viewport.setAttribute(
-                'content',
-                'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
-            );
+            viewport.setAttribute('content', 
+                'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
         }
     }
     
     setViewport();
-    document.documentElement.style.webkitTextSizeAdjust = '100%';
     
     // Reset viewport on orientation change
     window.addEventListener('orientationchange', function() {
@@ -240,124 +221,43 @@ function initZoomPrevention() {
     });
 }
 
-// ==================== SMOOTH ANIMATIONS ====================
-function initSmoothAnimations() {
-    // Animate tournament cards on load
-    const tournamentCards = document.querySelectorAll('.tournament-card');
-    
-    tournamentCards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        
-        setTimeout(() => {
-            card.style.transition = 'all 0.5s ease';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, index * 100);
-    });
-    
-    // Add hover effects for desktop
-    if (!isTouchDevice()) {
-        tournamentCards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px) scale(1.02)';
-                this.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)';
-            });
+// ==================== BUTTON HANDLERS ====================
+function initButtonHandlers() {
+    // Handle login redirect button
+    const loginRedirectBtn = document.querySelector('.login-redirect-btn');
+    if (loginRedirectBtn) {
+        loginRedirectBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Add loading state
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirecting...';
+            this.style.opacity = '0.8';
             
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-                this.style.boxShadow = '';
-            });
-        });
-    }
-    
-    // Animate feature cards on scroll
-    const featureCards = document.querySelectorAll('.feature-card');
-    
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-    
-    featureCards.forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = 'all 0.6s ease';
-        observer.observe(card);
-    });
-}
-
-// ==================== TOURNAMENT FILTERS ====================
-function initTournamentFilters() {
-    const filterButtons = document.querySelectorAll('.filter-btn:not(select)');
-    const tournamentCards = document.querySelectorAll('.tournament-card');
-    
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Remove active class from all buttons
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Add active class to clicked button
-            this.classList.add('active');
-            
-            const filter = this.textContent.toLowerCase();
-            
-            // Filter tournament cards
-            tournamentCards.forEach(card => {
-                if (filter === 'all') {
-                    card.style.display = 'block';
-                } else {
-                    const cardText = card.textContent.toLowerCase();
-                    card.style.display = cardText.includes(filter) ? 'block' : 'none';
-                }
-            });
-        });
-    });
-}
-
-// ==================== GAME SELECTOR ====================
-function initGameSelector() {
-    const gameSelect = document.getElementById('gameSelect');
-    if (gameSelect) {
-        gameSelect.addEventListener('change', function() {
-            const selectedValue = this.value;
-            if (!selectedValue) {
-                return;
-            }
-
-            // Show loading state
-            const tournamentGrid = document.querySelector('.tournament-grid');
-            if (!tournamentGrid) {
-                window.location.href = selectedValue;
-                return;
-            }
-
-            const originalContent = tournamentGrid.innerHTML;
-            
-            tournamentGrid.innerHTML = `
-                <div class="loading-tournaments">
-                    <div class="loading-spinner"></div>
-                    <p>Loading ${this.options[this.selectedIndex].text} tournaments...</p>
-                </div>
-            `;
-            
-            // Simulate API call
             setTimeout(() => {
-                tournamentGrid.innerHTML = originalContent;
-                console.log(`Switched to ${this.options[this.selectedIndex].text} tournaments`);
-                window.location.href = selectedValue;
-            }, 1000);
+                window.location.href = 'Login/login.html';
+            }, 500);
         });
     }
+    
+    // Handle register link
+    const registerLink = document.querySelector('.register-link a');
+    if (registerLink) {
+        registerLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'Register/Sign Up/signup.html';
+        });
+    }
+    
+    // Handle navigation auth buttons
+    document.querySelectorAll('.auth-buttons a').forEach(button => {
+        button.addEventListener('click', function(e) {
+            // No need for preventDefault as these are regular links
+            // Just adding visual feedback
+            this.style.opacity = '0.8';
+            setTimeout(() => {
+                this.style.opacity = '1';
+            }, 200);
+        });
+    });
 }
 
 // ==================== PERFORMANCE OPTIMIZATION ====================
@@ -385,7 +285,7 @@ function initPerformanceOptimization() {
     window.addEventListener('resize', function() {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(function() {
-            // Only performance optimizations remain
+            // Handle responsive adjustments if needed
         }, 250);
     });
 }
@@ -428,56 +328,6 @@ function initBrowserCompatibility() {
             }
         };
     }
-}
-
-// ==================== BUTTON HANDLERS (FIXED) ====================
-function initButtonHandlers() {
-    // For register buttons - using data attributes (recommended)
-    document.querySelectorAll('[data-action="register"]').forEach(button => {
-        button.addEventListener('click', function(e) {
-            const isLoggedIn = false; // This would come from your auth system
-            if (!isLoggedIn) {
-                e.preventDefault();
-                window.location.href = 'Register/register.html';
-            }
-        });
-    });
-    
-    // For login buttons - using data attributes  
-    document.querySelectorAll('[data-action="login"]').forEach(button => {
-        button.addEventListener('click', function(e) {
-            const isLoggedIn = false; // This would come from your auth system
-            if (!isLoggedIn) {
-                e.preventDefault();
-                window.location.href = 'Login/login.html';
-            }
-        });
-    });
-    
-    // Fallback for buttons without data attributes (using text content) but not in navigation
-    document.querySelectorAll('.btn-primary:not([data-action])').forEach(button => {
-        // Skip buttons that are inside the navigation
-        if (button.closest('nav')) {
-            return;
-        }
-        
-        button.addEventListener('click', function(e) {
-            const buttonText = button.textContent.trim().toLowerCase();
-            const isLoggedIn = false; // This would come from your auth system
-            
-            if (!isLoggedIn) {
-                e.preventDefault();
-                
-                if (buttonText.includes('register') || buttonText.includes('join') || buttonText.includes('notify me')) {
-                    // Redirect to register page for register/join buttons
-                    window.location.href = 'Register/register.html';
-                } else if (buttonText.includes('login') || buttonText.includes('sign in')) {
-                    // Redirect to login page for login buttons
-                    window.location.href = 'Login/login.html';
-                }
-            }
-        });
-    });
 }
 
 // ==================== UTILITY FUNCTIONS ====================
@@ -582,26 +432,10 @@ const mobileStyles = `
     transition: transform 0.1s ease !important;
 }
 
-/* Loading States */
-.loading-tournaments {
-    text-align: center;
-    padding: 3rem;
-    color: white;
-}
-
-.loading-spinner {
-    border: 3px solid rgba(255,255,255,0.3);
-    border-radius: 50%;
-    border-top: 3px solid #667eea;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 1rem;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+/* Button Loading State */
+.login-redirect-btn.loading {
+    pointer-events: none;
+    opacity: 0.8;
 }
 
 /* Mobile Responsive */
@@ -614,25 +448,35 @@ const mobileStyles = `
         display: none;
     }
     
-    .tournament-grid {
-        grid-template-columns: 1fr !important;
-    }
-    
-    .features-grid {
-        grid-template-columns: 1fr !important;
-    }
-    
-    .tournament-card {
+    .access-card {
         margin: 0 10px;
+        padding: 1.5rem !important;
+    }
+    
+    .tournaments-hero h1 {
+        font-size: 2.2rem !important;
+    }
+    
+    .tournaments-hero p {
+        font-size: 1.1rem !important;
     }
 }
 
 /* iOS Specific */
 @supports (-webkit-touch-callout: none) {
-    .tournament-card {
+    .access-card {
         -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
     }
+}
+
+/* Animation for access card */
+.access-card {
+    transition: all 0.3s ease !important;
+}
+
+.login-redirect-btn {
+    transition: all 0.3s ease !important;
 }
 `;
 
@@ -641,4 +485,4 @@ const styleElement = document.createElement('style');
 styleElement.textContent = mobileStyles;
 document.head.appendChild(styleElement);
 
-console.log('Esports Zone - Complete Mobile Optimization Loaded Successfully! (Button Issues Fixed)');
+console.log('Esports Zone Tournaments - Complete Mobile Optimization Loaded Successfully!');
