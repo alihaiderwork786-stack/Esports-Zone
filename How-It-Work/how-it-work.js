@@ -1,16 +1,16 @@
-// how-it-work.js – Esports Zone "How It Works" Page
-// Matches the structure & behaviour of the main homepage script
+// how-it-work.js – Esports Zone "How It Works" Page (Corrected)
+// Removed override of the partner program email form – HTML native submission restored
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('How It Works – Page initialised');
 
-    // 1. Mobile Navigation (uses existing HTML elements)
+    // 1. Mobile Navigation
     initMobileNavigation();
 
     // 2. Payment Method Switcher
     initPaymentMethodSwitcher();
 
-    // 3. Upload screenshot (open file picker, preview image, replace/remove)
+    // 3. Upload screenshot (open file picker, preview, replace/remove)
     initUploadHandler();
 
     // 4. Copy account number button
@@ -19,14 +19,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // 5. Submit payment details (frontend only, shows success message)
     initPaymentSubmission();
 
-    // 6. Touch optimisations for interactive elements
+    // 6. Touch optimisations
     initTouchOptimisation();
 
-    // 7. Smooth animations (step cards, benefit cards, etc.)
+    // 7. Smooth animations
     initSmoothAnimations();
 
-    // 8. Partner Program Notify Form (optional, basic frontend)
-    initNotifyForm();
+    // NOTE: The partner program email notification form is NOT overridden.
+    // It works as defined in the HTML (Web3Forms backend).
 });
 
 // ========== 1. MOBILE NAVIGATION ==========
@@ -39,14 +39,12 @@ function initMobileNavigation() {
 
     if (!mobileMenuBtn || !mobileOverlay) return;
 
-    // Open menu
     mobileMenuBtn.addEventListener('click', function(e) {
         e.preventDefault();
         mobileOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
     });
 
-    // Close functions
     function closeMenu() {
         mobileOverlay.classList.remove('active');
         document.body.style.overflow = '';
@@ -56,7 +54,6 @@ function initMobileNavigation() {
     mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
     mobileAuthBtns.forEach(btn => btn.addEventListener('click', closeMenu));
 
-    // Close when clicking outside the menu content
     mobileOverlay.addEventListener('click', function(e) {
         if (e.target === mobileOverlay) closeMenu();
     });
@@ -70,7 +67,6 @@ function initPaymentMethodSwitcher() {
 
     if (!methodOptions.length || !accountNumberSpan || !paymentNetworkSpan) return;
 
-    // Define details for each method
     const methodDetails = {
         easypaisa: {
             number: '0329-1924919',
@@ -97,20 +93,18 @@ function initPaymentMethodSwitcher() {
         }
     }
 
-    // Add click listeners to each method option
     methodOptions.forEach(option => {
         option.addEventListener('click', function() {
             setActiveMethod(this);
         });
     });
 
-    // Trigger default (Easypaisa is already active by default in HTML)
     const defaultActive = document.querySelector('.method-option.active');
     if (defaultActive) setActiveMethod(defaultActive);
     else if (methodOptions[0]) setActiveMethod(methodOptions[0]);
 }
 
-// ========== 3. UPLOAD SCREENSHOT (PREVIEW, REPLACE, REMOVE) ==========
+// ========== 3. UPLOAD SCREENSHOT ==========
 function initUploadHandler() {
     const uploadArea = document.getElementById('uploadArea');
     const fileInput = document.getElementById('paymentScreenshot');
@@ -121,10 +115,8 @@ function initUploadHandler() {
 
     if (!uploadArea || !fileInput) return;
 
-    // Trigger file input when upload area is clicked
     uploadArea.addEventListener('click', () => fileInput.click());
 
-    // Handle file selection
     fileInput.addEventListener('change', function(event) {
         const file = event.target.files[0];
         if (file && file.type.startsWith('image/')) {
@@ -143,14 +135,12 @@ function initUploadHandler() {
         }
     });
 
-    // Replace image
     if (replaceBtn) {
         replaceBtn.addEventListener('click', function() {
             fileInput.click();
         });
     }
 
-    // Remove image
     if (removeBtn) {
         removeBtn.addEventListener('click', function() {
             fileInput.value = '';
@@ -172,7 +162,6 @@ function initCopyButton() {
         const textToCopy = accountNumberSpan.textContent;
         if (!textToCopy) return;
 
-        // Modern clipboard API
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(textToCopy).then(() => {
                 showToast('Account number copied!', 'success');
@@ -195,7 +184,6 @@ function initCopyButton() {
     }
 
     function showToast(msg, type) {
-        // Simple toast message
         let toast = document.querySelector('.payment-toast');
         if (!toast) {
             toast = document.createElement('div');
@@ -228,12 +216,10 @@ function initPaymentSubmission() {
     const submitBtn = document.getElementById('submitPaymentBtn');
     if (!submitBtn) return;
 
-    // Get form fields
     const transactionInput = document.getElementById('transactionId');
     const amountInput = document.getElementById('paymentAmount');
     const usernameInput = document.getElementById('userUsername');
 
-    // Create or get success message container
     let successMsgDiv = document.querySelector('.payment-success-msg');
     if (!successMsgDiv) {
         successMsgDiv = document.createElement('div');
@@ -244,7 +230,6 @@ function initPaymentSubmission() {
         successMsgDiv.style.textAlign = 'center';
         successMsgDiv.style.fontWeight = '600';
         successMsgDiv.style.display = 'none';
-        // Insert after submit button
         submitBtn.parentNode.insertBefore(successMsgDiv, submitBtn.nextSibling);
     }
 
@@ -255,7 +240,6 @@ function initPaymentSubmission() {
         const amount = amountInput ? amountInput.value.trim() : '';
         const username = usernameInput ? usernameInput.value.trim() : '';
 
-        // Basic validation
         if (!transactionId || !amount || !username) {
             showFormError('Please fill in all fields (Transaction ID, Amount, Username).');
             return;
@@ -266,22 +250,13 @@ function initPaymentSubmission() {
             return;
         }
 
-        // Simulate success (no backend)
         successMsgDiv.textContent = '✅ Payment submitted successfully! Our team will verify and add coins within 2-8 hours.';
         successMsgDiv.style.backgroundColor = 'rgba(76, 175, 80, 0.15)';
         successMsgDiv.style.color = '#2e7d32';
         successMsgDiv.style.border = '1px solid #4CAF50';
         successMsgDiv.style.display = 'block';
-
-        // Optionally clear fields (optional behaviour)
-        // transactionInput.value = '';
-        // amountInput.value = '';
-        // usernameInput.value = '';
-
-        // Scroll to message
         successMsgDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-        // Hide message after 6 seconds
         setTimeout(() => {
             if (successMsgDiv) successMsgDiv.style.display = 'none';
         }, 6000);
@@ -324,7 +299,6 @@ function initTouchOptimisation() {
         }, { passive: true });
     });
 
-    // Minimum touch target size check
     interactiveElements.forEach(el => {
         const rect = el.getBoundingClientRect();
         if (rect.width < 44 || rect.height < 44) {
@@ -333,7 +307,6 @@ function initTouchOptimisation() {
         }
     });
 
-    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -353,9 +326,8 @@ function initTouchOptimisation() {
     });
 }
 
-// ========== 7. SMOOTH ANIMATIONS & SCROLL REVEAL ==========
+// ========== 7. SMOOTH ANIMATIONS (SCROLL REVEAL) ==========
 function initSmoothAnimations() {
-    // Animate step cards and benefit cards on scroll
     const animatedElements = document.querySelectorAll('.step-detailed, .benefit-card, .support-option, .overview-card');
 
     const observerOptions = {
@@ -380,7 +352,6 @@ function initSmoothAnimations() {
         observer.observe(el);
     });
 
-    // Hover effects for desktop (non-touch devices)
     if (!('ontouchstart' in window)) {
         const cards = document.querySelectorAll('.step-detailed, .benefit-card, .overview-card');
         cards.forEach(card => {
@@ -394,33 +365,4 @@ function initSmoothAnimations() {
             });
         });
     }
-}
-
-// ========== 8. PARTNER PROGRAM NOTIFY FORM (BASIC) ==========
-function initNotifyForm() {
-    const notifyForm = document.querySelector('.notify-form');
-    if (!notifyForm) return;
-
-    notifyForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const emailInput = this.querySelector('input[type="email"]');
-        const email = emailInput ? emailInput.value.trim() : '';
-
-        if (email && email.includes('@')) {
-            // Simulate success (no backend)
-            const successDiv = document.getElementById('successMessage');
-            if (successDiv) {
-                successDiv.textContent = '🎉 Thanks! We’ll notify you when the Partner Program launches.';
-                successDiv.style.display = 'block';
-                emailInput.value = '';
-                setTimeout(() => {
-                    successDiv.style.display = 'none';
-                }, 5000);
-            } else {
-                alert('Thanks! We will notify you when the Partner Program launches.');
-            }
-        } else {
-            alert('Please enter a valid email address.');
-        }
-    });
 }
