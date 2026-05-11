@@ -61,10 +61,10 @@ function initPaymentMethods() {
             const method = this.dataset.method;
             if (accNum && network) {
                 if (method === 'easypaisa') {
-                    accNum.innerText = '0312-3456789';
+                    accNum.innerText = '0329-1924919';
                     network.innerText = 'Easypaisa';
                 } else if (method === 'jazzcash') {
-                    accNum.innerText = '0300-1234567';
+                    accNum.innerText = '0329-1924919';
                     network.innerText = 'JazzCash';
                 } else {
                     accNum.innerText = '1234-5678901-2345';
@@ -364,31 +364,6 @@ function initPerformance() {
     });
 }
 
-// ==================== ADMIN CONSOLE ====================
-function initAdminConsole() {
-    window.checkBackendEmails = async () => {
-        try {
-            const res = await fetch(BACKEND_URL + '?action=getEmails');
-            const data = await res.json();
-            console.log('📧 Backend emails:', data);
-            return data;
-        } catch(e) { console.error(e); }
-    };
-    window.checkLocalEmails = () => {
-        const emails = JSON.parse(localStorage.getItem('partnerEmails') || '[]');
-        console.log('📧 Local emails:', emails);
-        return emails;
-    };
-    window.testConnection = async () => {
-        console.log('🧪 Testing connection...');
-        await window.checkBackendEmails();
-        window.checkLocalEmails();
-    };
-    setTimeout(() => {
-        console.log('🔄 Auto-testing connection...');
-        window.testConnection();
-    }, 1000);
-}
 
 // ==================== INJECT MISSING MOBILE STYLES ====================
 (function injectMobileStyles() {
