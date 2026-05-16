@@ -2,15 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="login.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Esports Zone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <link rel="stylesheet" href="login.css">
 </head>
 <body>
-    <h2>Login</h2>
-    <form action="login.php" method="post">
-        <input type="email" name="email" placeholder="Email" required><br>
-        <input type="password" name="password" placeholder="Password" required><br>
-        <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="../Register/register.html">Register here</a></p>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo">
+                <h1>Esports<span>Zone</span></h1>
+                <p>Sign in to your account</p>
+            </div>
+            
+            <form>
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+                
+                <div class="remember-forgot">
+                    <div class="remember">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="login-button">Sign In</button>
+            </form>
+            
+            <div class="separator">Or continue with</div>
+            
+            <div class="social-login">
+                <a href="#" class="social-btn">
+                    <i class="fab fa-google"></i>
+                </a>
+                <a href="#" class="social-btn">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-btn">
+                    <i class="fab fa-discord"></i>
+                </a>
+            </div>
+            
+            <div class="register-link">
+                Don't have an account? <a href="#">Sign up now</a>
+            </div>
+        </div>
+    </div>
+<c="login.js"></script>
 </body>
+</html>
